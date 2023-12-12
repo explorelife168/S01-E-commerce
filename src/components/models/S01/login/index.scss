@@ -1,0 +1,73 @@
+.login-wrap {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2b3035;
+  .login-container {
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(50%);
+
+    .logo {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+      margin-bottom: 5%;
+    }
+    .title {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 6%;
+    }
+    .input {
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      margin-bottom: 6%;
+      input {
+        font-size: 0.8rem;
+        background-color: #212529;
+        border: 1px solid #495057;
+        width: 230px;
+        height: 40px;
+      }
+      input::placeholder {
+        color: #fff;
+        padding-left: 5%;
+      }
+      input:nth-child(1) {
+        margin-bottom: -1px;
+        border-radius: 5px 5px 0 0;
+      }
+      input:nth-child(2) {
+        border-radius: 0 0 5px 5px;
+      }
+    }
+    .box {
+      display: flex;
+      margin-bottom: 6%;
+      .box-text {
+        margin-left: 2%;
+        color: #fff;
+        font-size: 0.9rem;
+      }
+      input[type="checkbox"] {
+        // appearance: none; /* 使得 checkbox 的外觀可以被修改 */
+        // -webkit-appearance: none;
+        // -moz-appearance: none;
+        // width: 20px; /* 設定 checkbox 寬度 */
+        // height: 20px; /* 設定 checkbox 高度 */
+        // border: 2px solid #333; /* 設定 checkbox 邊框顏色 */
+        // background-color: #fff; /* 設定 checkbox 背景顏色 */
+        // border-radius: 4px; /* 設定 checkbox 圓角 */
+        // outline: none; /* 移除默認的外框 */
+        // cursor: pointer; /* 讓滑鼠移過時顯示指標 */
+      }
+    }
+  }
+}
