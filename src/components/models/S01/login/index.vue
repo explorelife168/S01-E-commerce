@@ -6,13 +6,21 @@
         :style="{ 'background-image': `url(${require('@/assets/logo.png')})` }"
       ></div>
       <div class="title" v-html="'Please sign in'"></div>
+
       <div class="input">
         <input type="text" placeholder="Email address" />
         <input type="text" placeholder="Password" />
       </div>
-      <div class="box">
-        <input type="checkbox" />
-        <div class="box-text" v-html="'Remember me'"></div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value="remember-me"
+          id="flexCheckDefault"
+        />
+        <label class="form-check-label" for="flexCheckDefault">
+          Remember me
+        </label>
       </div>
       <div class="btn-sign-in">
         <button>Sign in</button>
