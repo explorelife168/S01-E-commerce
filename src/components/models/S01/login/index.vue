@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrap">
-    <div class="login-container">
+    <form class="login-container" @submit.prevent="signin">
       <div
         class="logo"
         :style="{ 'background-image': `url(${require('@/assets/logo.png')})` }"
@@ -8,8 +8,12 @@
       <div class="title" v-html="'Please sign in'"></div>
 
       <div class="input">
-        <input type="text" placeholder="Email address" />
-        <input type="text" placeholder="Password" />
+        <input
+          v-model="user.username"
+          type="text"
+          placeholder="Email address"
+        />
+        <input v-model="user.password" type="text" placeholder="Password" />
       </div>
       <div class="form-check">
         <input
@@ -23,17 +27,23 @@
         </label>
       </div>
       <div class="btn-sign-in">
-        <button>Sign in</button>
+        <button type="submit">Sign in</button>
       </div>
       <div class="data" v-html="`© 2017-${currentYears}`"></div>
-    </div>
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import axios, { AxiosResponse } from "axios";
+import router from "@/router";
+import { ref, onMounted, reactive } from "vue";
 
 const currentYears = ref(0);
+const user = reactive({
+  username: "",
+  password: "",
+});
 
 onMounted(() => {
   getYears();
@@ -43,6 +53,18 @@ const getYears = () => {
   const now = new Date();
   const years = now.getFullYear();
   currentYears.value = years;
+};
+
+const signin = () => {
+  const api = "https://vue-course-api.hexschool.io/admin/signin";
+  axios.post(api, user).then((res: AxiosResponse) => {
+    if (res.data.success) {
+      const token = res.data.token;
+      const expired = res.data.expired;
+      document.cookie = `"hexToken=${token}; expires=${new Date(expired)};`;
+      router.push("/");
+    }
+  });
 };
 </script>
 
