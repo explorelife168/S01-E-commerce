@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: HomeView,
-    meta: { requireAuth: true }, // router驗證 /
+    // meta: { requireAuth: true }, // router驗證 /
   },
   {
     path: "/about",
@@ -21,6 +21,19 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: () => import("../components/models/S01/login/index.vue"),
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: () => import("../components/models/S01/Dashboard/index.vue"),
+    // meta: { requireAuth: true },
+    children: [
+      {
+        path: "products",
+        name: "products",
+        component: () => import("../components/global/Products/index.vue"),
+      },
+    ],
   },
 ];
 
