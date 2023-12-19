@@ -1,11 +1,19 @@
 <template>
   <div class="dashboard-wrap">
-    <p>123</p>
+    <Navbar />
+    <div class="flex">
+      <Sidebar />
+      <products />
+    </div>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import Sidebar from "../../../global/Sidebar/index.vue";
+import Navbar from "../../../global/Navbar/index.vue";
+import products from "../../../global/Products/index.vue";
+</script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "./index.scss";
 </style>
