@@ -13,8 +13,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in products" :key="item.id">
-            <th>{{ console.log(item) }}</th>
+          <tr v-for="obj in products" :key="obj.id">
+            <th>{{ obj.category }}</th>
+            <th>{{ obj.title }}</th>
+            <th>{{ obj.origin_price }}</th>
+            <th>{{ obj.price }}</th>
+            <th>
+              <button></button>
+            </th>
+            <th>編輯</th>
           </tr>
         </tbody>
       </table>
@@ -22,42 +29,41 @@
   </div>
 </template>
 
-<script setup>
-import axios from "axios";
-import { onMounted, ref } from "vue";
+<script setup lang="ts">
+import axios, { AxiosResponse } from "axios";
+import { ref } from "vue";
 
-// interface Products {
-//   category: string;
-//   id: string;
-//   image: string;
-//   is_enabled: number;
-//   num: boolean;
-//   origin_price: number;
-//   price: number;
-//   title: string;
-//   unit: string;
-// }
+interface Products {
+  category: string;
+  id: string;
+  image: string;
+  is_enabled: number;
+  num: boolean;
+  origin_price: number;
+  price: number;
+  title: string;
+  unit: string;
+}
+interface ProductApi {
+  products: Partial<Products>;
+}
 
-// type AxiosResponse<T> = {
-//   data: T;
-// };
-
-const products = ref([]);
-console.log(products);
+const products = ref(); //產品List
 
 const getProducts = () => {
-  const api = "https://vue-course-api.hexschool.io/api/testapi_1/products";
+  const api = "https://vue-course-api.hexschool.io/api/testapi_2/products";
   axios
-    // .get<AxiosResponse<Products[]>>(api)
-    .get(api)
-    .then((response) => {
-      products.value = response.data;
+    .get<ProductApi>(api)
+    .then((response: AxiosResponse<ProductApi>) => {
+      products.value = response.data.products;
+      console.log(products.value);
     })
     .catch((error) => {
       console.error(error);
     });
 };
-onMounted(() => getProducts());
+
+getProducts(); //執行 取得產品 API
 </script>
 
 <style lang="scss" scoped>
