@@ -27,13 +27,13 @@ const routes: Array<RouteRecordRaw> = [
     name: "admin",
     component: () => import("../components/models/S01/Dashboard/index.vue"),
     // meta: { requireAuth: true },
-    children: [
-      {
-        path: "products",
-        name: "products",
-        component: () => import("../components/global/ProductsList/index.vue"),
-      },
-    ],
+    // children: [
+    //   {
+    //     path: "products",
+    //     name: "products",
+    //     component: () => import("../components/global/List/index.vue"),
+    //   },
+    // ],
   },
 ];
 
