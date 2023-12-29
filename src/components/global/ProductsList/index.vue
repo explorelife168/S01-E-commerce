@@ -1,5 +1,8 @@
 <template>
   <div class="Product-wrap">
+    <div class="create-btn">
+      <button>建立新的產品</button>
+    </div>
     <div class="products">
       <table>
         <thead>
@@ -29,7 +32,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import axios, { AxiosResponse } from "axios";
 import { ref } from "vue";
 
@@ -42,7 +45,7 @@ interface Products {
   origin_price: number;
   price: number;
   title: string;
-  unit: string;
+  unit: number;
 }
 interface ProductApi {
   products: Partial<Products>;

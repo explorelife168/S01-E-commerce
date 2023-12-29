@@ -1,23 +1,25 @@
 .Navbar-wrap {
+  display: block;
   position: relative;
   width: 100%;
-  height: 7vh;
+  height: 70px;
   // background-color: rgba(100, 100, 180, 0.2);
   .title {
     position: fixed;
     display: flex;
     width: 100%;
-    height: 7vh;
-    background-color: rgba(50, 50, 180, 0.5);
+    height: 70px;
+    // background-color: rgba(50, 50, 180, 0.5);
     .left-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 17%;
       min-width: 175px;
       max-width: 250px;
       background-color: #181c1f;
       color: #ffffff;
-      text-align: center;
       font-size: 1rem;
-      line-height: 7vh;
     }
     .right-title {
       width: 100%;
@@ -27,7 +29,7 @@
   .block {
     display: block;
     width: 100%;
-    height: 14vh;
+    height: 100%;
     // background-color: rgba(100, 100, 180, 0.4);
   }
 }

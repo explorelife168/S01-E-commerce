@@ -1,0 +1,16 @@
+.Product-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(50, 100, 200, 0.3);
+  .create-btn {
+    position: relative;
+    width: 100%;
+    button {
+      position: absolute;
+      // right: 50px;
+      right: 0%;
+      top: 0%;
+    }
+  }
+}

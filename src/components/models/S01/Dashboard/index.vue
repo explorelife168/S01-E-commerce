@@ -3,15 +3,15 @@
     <Navbar />
     <div class="flex">
       <Sidebar />
-      <Products />
+      <ProductsList />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Sidebar from "../../../global/Sidebar/index.vue";
 import Navbar from "../../../global/Navbar/index.vue";
-import Products from "../../../global/Products/index.vue";
+import Sidebar from "../../../global/Sidebar/index.vue";
+import ProductsList from "../../../global/ProductsList/index.vue";
 </script>
 
 <style lang="scss" scoped>
