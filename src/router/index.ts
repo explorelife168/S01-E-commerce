@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "products",
         name: "products",
-        component: () => import("../components/global/Products/index.vue"),
+        component: () => import("../components/global/ProductsList/index.vue"),
       },
     ],
   },
