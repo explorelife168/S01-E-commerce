@@ -1,30 +1,30 @@
 <template>
-  <div class="Product-wrap">
+  <div class="product-wrap">
     <div class="create-btn">
-      <button>建立新的產品</button>
+      <button class="btn">建立新的產品</button>
     </div>
     <div class="products">
       <table>
         <thead>
           <tr>
-            <th>分類</th>
-            <th>名稱</th>
-            <th>原價</th>
-            <th>售價</th>
-            <th>是否啟用</th>
-            <th>編輯</th>
+            <td>分類</td>
+            <td>名稱</td>
+            <td>原價</td>
+            <td>售價</td>
+            <td>是否啟用</td>
+            <td>編輯</td>
           </tr>
         </thead>
         <tbody>
           <tr v-for="obj in products" :key="obj.id">
-            <th>{{ obj.category }}</th>
-            <th>{{ obj.title }}</th>
-            <th>{{ obj.origin_price }}</th>
-            <th>{{ obj.price }}</th>
-            <th>
-              <button></button>
-            </th>
-            <th>編輯</th>
+            <td>{{ obj.category }}</td>
+            <td>{{ obj.title }}</td>
+            <td>{{ obj.origin_price }}</td>
+            <td>{{ obj.price }}</td>
+            <td>
+              <button>啟用</button>
+            </td>
+            <td>編輯</td>
           </tr>
         </tbody>
       </table>
