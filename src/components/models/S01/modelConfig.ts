@@ -1,5 +1,5 @@
 // 運行模組
-type ModelConfig = {
+export type ModelConfig = {
   createNewProduct: boolean;
 };
 
