@@ -66,7 +66,7 @@
               type="checkbox"
               id="formEnableDefault"
             />
-            <label class="form-enable-lable" for="formEnableDefault"
+            <label class="form-enable-label" for="formEnableDefault"
               >是否啟用</label
             >
           </div>
