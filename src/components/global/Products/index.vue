@@ -1,7 +1,7 @@
 <template>
   <div class="product-wrap">
     <div class="create-btn">
-      <button class="btn">建立新的產品</button>
+      <button class="btn" @click="createNewProduct">建立新的產品</button>
     </div>
     <div class="products">
       <table>
@@ -21,20 +21,22 @@
             <td>{{ obj.title }}</td>
             <td>{{ obj.origin_price }}</td>
             <td>{{ obj.price }}</td>
-            <td>
-              <button>啟用</button>
-            </td>
-            <td>編輯</td>
+            <td>未啟用</td>
+            <td><button>編輯</button></td>
           </tr>
         </tbody>
       </table>
     </div>
+    <!-- <div class="new-product">
+      <div class="bg"></div>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts" setup>
 import axios, { AxiosResponse } from "axios";
 import { ref } from "vue";
+import modelConfig from "@/components/models/S01/modelConfig";
 
 interface Products {
   category: string;
@@ -52,6 +54,7 @@ interface ProductApi {
 }
 
 const products = ref(); //產品List
+const modelConfigController = ref(modelConfig);
 
 const getProducts = () => {
   const api = "https://vue-course-api.hexschool.io/api/testapi_2/products";
@@ -64,6 +67,9 @@ const getProducts = () => {
     .catch((error) => {
       console.error(error);
     });
+};
+const createNewProduct = (): boolean => {
+  return (modelConfigController.value.createNewProduct = true);
 };
 
 getProducts(); //執行 取得產品 API
