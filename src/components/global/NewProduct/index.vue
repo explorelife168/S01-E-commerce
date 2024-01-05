@@ -11,7 +11,11 @@
         <div class="content-left">
           <div class="input-image">
             <div class="input-image-text" v-text="'輸入圖片網址'"></div>
-            <input type="text" placeholder="請輸入圖片連結" />
+            <input
+              type="text"
+              placeholder="請輸入圖片連結"
+              v-model="newProducts.imageUrl"
+            />
           </div>
           <div class="transmit-image">
             <div class="transmit-image-text" v-text="'或 上傳圖片'"></div>
@@ -22,26 +26,46 @@
         <div class="content-right">
           <div class="input-title">
             <div class="input-title-text" v-text="'標題'"></div>
-            <input type="text" placeholder="請輸入標題" />
+            <input
+              type="text"
+              placeholder="請輸入標題"
+              v-model="newProducts.title"
+            />
           </div>
           <div class="type-unit-flex">
             <div class="input-type">
               <div class="type-text" v-text="'分類'"></div>
-              <input type="text" placeholder="請輸入分類" />
+              <input
+                type="text"
+                placeholder="請輸入分類"
+                v-model="newProducts.category"
+              />
             </div>
             <div class="input-unit">
               <div class="unit-text" v-text="'單位'"></div>
-              <input type="text" placeholder="請輸入單位" />
+              <input
+                type="text"
+                placeholder="請輸入單位"
+                v-model="newProducts.unit"
+              />
             </div>
           </div>
           <div class="price-sell-flex">
             <div class="input-price">
               <div class="price-text" v-text="'原價'"></div>
-              <input type="text" placeholder="請輸入原價" />
+              <input
+                type="text"
+                placeholder="請輸入原價"
+                v-model="newProducts.origin_price"
+              />
             </div>
             <div class="input-sell">
               <div class="sell-text" v-text="'單位售價'"></div>
-              <input type="text" placeholder="請輸入售價" />
+              <input
+                type="text"
+                placeholder="請輸入售價"
+                v-model="newProducts.price"
+              />
             </div>
           </div>
           <div class="describe">
@@ -50,14 +74,17 @@
               name="產品描述"
               id=""
               placeholder="請輸入產品描述"
+              v-model="newProducts.description"
             ></textarea>
           </div>
+
           <div class="content-description">
             <div class="content-description-text" v-text="'說明內容'"></div>
             <textarea
               name="說明內容"
               id=""
               placeholder="請輸入產品說明內容"
+              v-model="newProducts.content"
             ></textarea>
           </div>
           <div class="form-enable">
@@ -65,13 +92,16 @@
               class="form-enable-input"
               type="checkbox"
               id="formEnableDefault"
+              v-model="newProducts.is_enabled"
+              :true-value="1"
+              :false-value="2"
             />
             <label class="form-enable-label" for="formEnableDefault"
               >是否啟用</label
             >
           </div>
           <div class="buttonContainer">
-            <button class="confirm">確認</button>
+            <button class="confirm" @click="updateProducts">確認</button>
             <button class="cancel" @click="closureController">取消</button>
           </div>
         </div>
@@ -81,13 +111,27 @@
 </template>
 
 <script lang="ts" setup>
+import axios from "axios";
 import { ref } from "vue";
 import { modelConfig } from "../../models/S01/modelConfig";
 
 const modelConfigController = ref(modelConfig);
+const newProducts = ref({});
 
 const closureController = (): boolean => {
   return (modelConfigController.value.createNewProduct = false);
+};
+
+const updateProducts = () => {
+  const api = "https://vue-course-api.hexschool.io/api/testapi_2/admin/product";
+  axios
+    .post(api, { data: newProducts.value })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
 </script>
 
