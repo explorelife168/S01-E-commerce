@@ -5,9 +5,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true; //跨域請求是否攜帶cookie做驗證
+
 createApp(App).use(VueAxios, axios).use(store).use(router).mount("#app");
 
+//頁面驗證使用, 在router設定
 router.beforeEach((to, from, next) => {
   console.log(to);
   if (to.meta.requireAuth) {
