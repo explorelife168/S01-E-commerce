@@ -3,7 +3,7 @@
     <Navbar />
     <div class="flex">
       <Sidebar />
-      <Products />
+      <router-view></router-view>
     </div>
     <div
       class="new-product-cards"
@@ -17,12 +17,22 @@
 <script setup lang="ts">
 import Navbar from "../../../global/Navbar/index.vue";
 import Sidebar from "../../../global/Sidebar/index.vue";
-import Products from "../../../global/Products/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
 import { modelConfig } from "../modelConfig";
 import { ref } from "vue";
+import axios from "axios";
 
 const modelConfigController = ref(modelConfig);
+
+const updateToken = () => {
+  const token = document.cookie.replace(
+    /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+    "$1"
+  );
+  axios.defaults.headers.common.Authorization = token;
+  console.log("token", token);
+};
+updateToken(); //保存cookie以及request時候發送Token驗證用
 </script>
 
 <style lang="scss" scoped>

@@ -6,16 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: HomeView,
-    // meta: { requireAuth: true }, // router驗證 /
-  },
-  {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    meta: { requireAuth: true }, // router驗證
   },
   {
     path: "/login",
@@ -26,14 +17,19 @@ const routes: Array<RouteRecordRaw> = [
     path: "/admin",
     name: "admin",
     component: () => import("../components/models/S01/Dashboard/index.vue"),
-    // meta: { requireAuth: true },
-    // children: [
-    //   {
-    //     path: "products",
-    //     name: "products",
-    //     component: () => import("../components/global/List/index.vue"),
-    //   },
-    // ],
+    children: [
+      {
+        path: "products",
+        name: "products",
+        component: () => import("../components/global/Products/index.vue"),
+        meta: { requireAuth: true },
+      },
+    ],
+  },
+  {
+    //如登入到其他非設定頁面會直接導回login畫面
+    path: "/:catchAll(.*)", // router 4.X 需要用此方式，否則會有 340 Uncaught Error
+    redirect: "/login",
   },
 ];
 
