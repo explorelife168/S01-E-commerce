@@ -1,5 +1,5 @@
 <template>
-  <div class="Sidebar-wrap">
+  <div class="sidebar-wrap">
     <div class="menu">
       <ul>
         <li>Dashboard</li>

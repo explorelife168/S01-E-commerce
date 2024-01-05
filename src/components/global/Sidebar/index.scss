@@ -1,12 +1,14 @@
-.Sidebar-wrap {
+.sidebar-wrap {
   position: relative;
-  width: calc(17% - 2px);
-  min-width: calc(175px - 2px);
-  max-width: calc(250px - 2px);
+  // width: calc(17% - 2px);
+  width: 15%;
+  min-width: calc(150px - 2px);
+
   height: 100%;
   background-color: #2a3036;
   border: 1px solid #495057;
   .menu {
+    width: 100%;
     ul {
       position: relative;
       padding-top: 15%;
