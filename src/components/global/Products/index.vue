@@ -22,7 +22,10 @@
             <td>{{ obj.origin_price }}</td>
             <td>{{ obj.price }}</td>
             <td>未啟用</td>
-            <td><button>編輯</button></td>
+            <td>
+              <button class="edit">編輯</button>
+              <button class="delete">刪除</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -37,6 +40,7 @@
 import axios, { AxiosResponse } from "axios";
 import { ref } from "vue";
 import modelConfig from "@/components/models/S01/modelConfig";
+import config from "../../../../config/dev.env";
 
 interface Products {
   category: string;
@@ -54,10 +58,10 @@ interface ProductApi {
 }
 
 const products = ref(); //產品List
-const modelConfigController = ref(modelConfig);
-
+const modelConfigController = ref(modelConfig); //控制模型
+//取得產品API
 const getProducts = () => {
-  const api = "https://vue-course-api.hexschool.io/api/testapi_2/products";
+  const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/products`;
   axios
     .get<ProductApi>(api)
     .then((response: AxiosResponse<ProductApi>) => {
@@ -71,7 +75,6 @@ const getProducts = () => {
 const createNewProduct = (): boolean => {
   return (modelConfigController.value.createNewProduct = true);
 };
-
 getProducts(); //執行 取得產品 API
 </script>
 
