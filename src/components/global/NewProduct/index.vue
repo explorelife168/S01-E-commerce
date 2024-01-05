@@ -112,11 +112,33 @@
 
 <script lang="ts" setup>
 import axios from "axios";
-import { ref } from "vue";
+import { ref, Ref } from "vue";
 import { modelConfig } from "../../models/S01/modelConfig";
 
+type NewProducts<T = number | string> = {
+  imageUrl: string;
+  title: string;
+  category: string;
+  unit: string;
+  origin_price: T;
+  price: T;
+  description: string;
+  content: string;
+  is_enabled: string;
+};
+
 const modelConfigController = ref(modelConfig);
-const newProducts = ref({});
+const newProducts: Ref<NewProducts> = ref({
+  imageUrl: "",
+  title: "",
+  category: "",
+  unit: "",
+  origin_price: 0,
+  price: 0,
+  description: "",
+  content: "",
+  is_enabled: "",
+});
 
 const closureController = (): boolean => {
   return (modelConfigController.value.createNewProduct = false);
