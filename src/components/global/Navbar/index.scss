@@ -14,16 +14,27 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 17%;
-      min-width: 175px;
-      max-width: 250px;
+      width: 15%;
+      min-width: 150px;
       background-color: #181c1f;
       color: #ffffff;
       font-size: 1rem;
     }
     .right-title {
-      width: 100%;
+      position: relative;
+      width: 85%;
       background-color: #202529;
+      .sign-out {
+        position: absolute;
+        right: 3%;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background-color: #202529;
+        color: #b1b5bb;
+        font-size: 1.3rem;
+        cursor: pointer;
+      }
     }
   }
   .block {
