@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrap">
-    <form class="login-container" @submit.prevent="signin">
+    <form class="login-container" @submit.prevent="signIn">
       <div
         class="logo"
         :style="{ 'background-image': `url(${require('@/assets/logo.png')})` }"
@@ -36,8 +36,9 @@
 
 <script setup lang="ts">
 import axios, { AxiosResponse } from "axios";
-import router from "@/router";
 import { ref, onMounted, reactive } from "vue";
+import router from "@/router";
+import config from "../../../../../config/dev.env";
 
 const currentYears = ref(0);
 const user = reactive({
@@ -55,14 +56,15 @@ const getYears = () => {
   currentYears.value = years;
 };
 
-const signin = () => {
-  const api = "https://vue-course-api.hexschool.io/admin/signin";
+const signIn = () => {
+  const api = `${config.API_PATH}/admin/signin`;
   axios.post(api, user).then((res: AxiosResponse) => {
+    console.log(res.data);
     if (res.data.success) {
       const token = res.data.token;
       const expired = res.data.expired;
-      document.cookie = `"hexToken=${token}; expires=${new Date(expired)};`;
-      router.push("/");
+      document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
+      router.push("/admin");
     }
   });
 };
