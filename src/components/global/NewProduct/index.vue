@@ -114,6 +114,9 @@
 import axios from "axios";
 import { ref, Ref } from "vue";
 import { modelConfig } from "../../models/S01/modelConfig";
+import useDataStore from "@/stores/useDataStore";
+
+const dataStore = useDataStore();
 
 type NewProducts<T = number | string> = {
   imageUrl: string;
@@ -150,6 +153,8 @@ const updateProducts = () => {
     .post(api, { data: newProducts.value })
     .then((response) => {
       console.log(response);
+      closureController(); //新增成功後,關閉產品新增畫面
+      dataStore.getProducts(); //新增後更新畫面
     })
     .catch((error) => {
       console.error(error);
