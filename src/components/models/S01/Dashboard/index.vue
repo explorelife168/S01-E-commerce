@@ -15,12 +15,12 @@
 </template>
 
 <script setup lang="ts">
+import axios from "axios";
+import { ref } from "vue";
 import Navbar from "../../../global/Navbar/index.vue";
 import Sidebar from "../../../global/Sidebar/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
 import { modelConfig } from "../modelConfig";
-import { ref } from "vue";
-import axios from "axios";
 
 const modelConfigController = ref(modelConfig);
 
@@ -30,7 +30,6 @@ const updateToken = () => {
     "$1"
   );
   axios.defaults.headers.common.Authorization = token;
-  console.log("token", token);
 };
 updateToken(); //保存cookie以及request時候發送Token驗證用
 </script>
