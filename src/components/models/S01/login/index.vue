@@ -64,7 +64,7 @@ const signIn = () => {
       const token = res.data.token;
       const expired = res.data.expired;
       document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
-      router.push("/admin");
+      router.push("/admin/products");
     }
   });
 };
