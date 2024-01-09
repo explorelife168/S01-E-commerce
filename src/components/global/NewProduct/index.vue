@@ -101,7 +101,7 @@
             >
           </div>
           <div class="buttonContainer">
-            <button class="confirm" @click="updateProducts">確認</button>
+            <button class="confirm" @click="createProducts">確認</button>
             <button class="cancel" @click="closureController">取消</button>
           </div>
         </div>
@@ -147,7 +147,7 @@ const closureController = (): boolean => {
   return (modelConfigController.value.createNewProduct = false);
 };
 
-const updateProducts = () => {
+const createProducts = () => {
   const api = "https://vue-course-api.hexschool.io/api/testapi_2/admin/product";
   axios
     .post(api, { data: newProducts.value })
