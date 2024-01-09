@@ -1,6 +1,6 @@
+import axios from "axios";
 import { defineStore } from "pinia";
 import config from "../../config/dev.env";
-import axios from "axios";
 
 //回傳的值(product list)設定型別
 interface Products<T = number | string> {
@@ -26,6 +26,7 @@ const useDataStore = defineStore({
   }),
   getters: {},
   actions: {
+    // 產品畫面更新
     async getProducts() {
       try {
         const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/products`;
