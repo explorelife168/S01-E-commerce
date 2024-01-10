@@ -3,20 +3,23 @@ import { defineStore } from "pinia";
 import config from "../../config/dev.env";
 
 //回傳的值(product list)設定型別
-interface Products<T = number | string> {
+interface UpdateProductsList {
   category: string;
+  content: string;
+  description: string;
   id: string;
-  image: string;
+  imageUrl: string;
   is_enabled: number;
-  num: boolean;
-  origin_price: T;
-  price: T;
+  origin_price: number;
+  price: number;
   title: string;
-  unit: number;
+  unit: string;
+  num: number;
+  image: string;
 }
 
 type UseDataStore = {
-  products: Products[];
+  products: UpdateProductsList[];
 };
 
 const useDataStore = defineStore({
