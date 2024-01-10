@@ -21,9 +21,9 @@
             <td>{{ obj.title }}</td>
             <td>{{ obj.origin_price }}</td>
             <td>{{ obj.price }}</td>
-            <td>未啟用</td>
+            <td>{{ obj.is_enabled == 1 ? "啟用" : "未啟用" }}</td>
             <td>
-              <button class="edit">編輯</button>
+              <button class="edit" @click="editProducts(obj)">編輯</button>
               <button class="delete" @click="deleteProducts(obj.id)">
                 刪除
               </button>
@@ -36,19 +36,42 @@
 </template>
 
 <script lang="ts" setup>
-// import axios, { AxiosResponse } from "axios";
 import axios from "axios";
 import { ref, computed } from "vue";
 import useDataStore from "../../../stores/useDataStore";
 import modelConfig from "@/components/models/S01/modelConfig";
 import config from "../../../../config/dev.env";
 
+interface EditProducts {
+  category: string;
+  content: string;
+  description: string;
+  id: string;
+  imageUrl: string;
+  is_enabled: number;
+  origin_price: number;
+  price: number;
+  title: string;
+  unit: string;
+  num: number;
+  image: string;
+}
+
 const dataStore = useDataStore();
 
 // const products = ref(); //產品List
 const modelConfigController = ref(modelConfig); //控制模型
 
+// 產品畫面顯示
 const updateProducts = computed(() => dataStore.products);
+
+// // 開啟建立新產品及編輯產品開關
+const createNewProduct = () => {
+  return (
+    (modelConfigController.value.editProducts = false),
+    (modelConfigController.value.createNewProduct = true)
+  );
+};
 
 // 刪除產品
 const deleteProducts = (id: string) => {
@@ -64,10 +87,12 @@ const deleteProducts = (id: string) => {
     });
 };
 
-//開啟建立新產品視窗開關
-const createNewProduct = (): boolean => {
-  return (modelConfigController.value.createNewProduct = true);
+const editProducts = (obj: EditProducts) => {
+  modelConfigController.value.createNewProduct = true;
+  modelConfigController.value.editProducts = true;
+  modelConfigController.value.productsId = obj.id;
 };
+
 // getProducts(); //執行 取得產品 API
 dataStore.getProducts();
 </script>
