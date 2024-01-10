@@ -25,11 +25,13 @@
           <div class="transmit-image">
             <div class="transmit-image-text" v-text="'或 上傳圖片'"></div>
             <input
-              type="text"
+              type="file"
               placeholder="未選擇任何檔案"
-              v-model="creteNewProducts.image"
+              @change="uploadFile"
             />
-            <button class="choiceFile">選擇檔案</button>
+            <div class="product-image">
+              <img :src="creteNewProducts.imageUrl" alt="" />
+            </div>
           </div>
         </div>
         <div class="content-right">
@@ -222,6 +224,32 @@ const editProducts = () => {
       console.error(error);
     });
 };
+
+const uploadFile = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  const files = target.files;
+  if (!files || !files[0]) return;
+  const firstFiles = files[0];
+  const formData = new FormData();
+  formData.append("file-to-upload", firstFiles);
+  const url = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/upload`;
+  axios
+    .post(url, formData, { headers: { "Content-Type": "multipart/form-data" } })
+    .then((response) => {
+      if (response.data.success) {
+        creteNewProducts.value.imageUrl = response.data.imageUrl;
+        console.log("圖片上傳成功");
+        console.log(creteNewProducts.value);
+      }
+    });
+};
+// const uploadFile = (ev: Event) => {
+//   const target = ev.target as HTMLInputElement;
+//   const files = target.files;
+//   if (!files || !files[0]) return;
+//   const firstFile = files[0];
+//   console.log(firstFile);
+// };
 </script>
 
 <style lang="scss" scoped>
