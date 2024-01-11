@@ -1,5 +1,6 @@
 <template>
   <div class="product-wrap">
+    <loading v-model:active="isLoading" />
     <div class="create-btn">
       <button class="btn" @click="createNewProduct">建立新的產品</button>
     </div>
@@ -38,6 +39,8 @@
 <script lang="ts" setup>
 import axios from "axios";
 import { ref, computed } from "vue";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 import useDataStore from "../../../stores/useDataStore";
 import modelConfig from "@/components/models/S01/modelConfig";
 import config from "../../../../config/dev.env";
@@ -62,6 +65,8 @@ const dataStore = useDataStore();
 // const products = ref(); //產品List
 const modelConfigController = ref(modelConfig); //控制模型
 
+const isLoading = ref(false);
+
 // 產品畫面顯示
 const updateProducts = computed(() => dataStore.products);
 
@@ -75,12 +80,14 @@ const createNewProduct = () => {
 
 // 刪除產品
 const deleteProducts = (id: string) => {
+  isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/product/${id}`;
   axios
     .delete(api, { data: id })
     .then((response) => {
       if (response.data.success) console.log("刪除商品成功");
       dataStore.getProducts();
+      isLoading.value = false;
     })
     .catch((error) => {
       console.error(error);
