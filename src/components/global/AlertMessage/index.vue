@@ -13,15 +13,6 @@ import useDataStore from "../../../stores/useDataStore";
 
 const dataStore = useDataStore;
 
-// const alertSwitch = ref(true);
-// const messages = ref([
-//   {
-//     message: "測試3",
-//     status: "danger",
-//     timestamp: 123,
-//   },
-// ]);
-
 const alertMessage = computed(() => {
   if (!dataStore().message) return;
   return dataStore().message;

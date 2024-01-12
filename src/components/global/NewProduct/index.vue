@@ -255,6 +255,10 @@ const uploadFile = (e: Event) => {
       if (response.data.success) {
         creteNewProducts.value.imageUrl = response.data.imageUrl;
         console.log("圖片上傳成功");
+      } else {
+        if (!response.data.success) {
+          dataStore.errorMessage(response.data.message);
+        }
       }
     })
     .catch((error) => {
