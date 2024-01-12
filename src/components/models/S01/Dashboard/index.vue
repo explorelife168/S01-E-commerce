@@ -11,12 +11,14 @@
     >
       <NewProduct />
     </div>
+    <AlertMessage />
   </div>
 </template>
 
 <script setup lang="ts">
 import axios from "axios";
 import { ref } from "vue";
+import AlertMessage from "../../../global/AlertMessage/index.vue";
 import Navbar from "../../../global/Navbar/index.vue";
 import Sidebar from "../../../global/Sidebar/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
