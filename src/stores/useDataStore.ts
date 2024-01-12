@@ -20,12 +20,18 @@ interface UpdateProductsList {
 
 type UseDataStore = {
   products: UpdateProductsList[];
+  message: string;
+  alertSwitch: boolean;
+  stopMessageSwitch: boolean;
 };
 
 const useDataStore = defineStore({
   id: "Data",
   state: (): UseDataStore => ({
     products: [],
+    message: "",
+    alertSwitch: false,
+    stopMessageSwitch: false,
   }),
   getters: {},
   actions: {
@@ -38,6 +44,18 @@ const useDataStore = defineStore({
       } catch (error) {
         console.error(error);
       }
+    },
+    errorMessage(msg: string) {
+      if (this.stopMessageSwitch) return;
+      this.message = msg;
+      this.alertSwitch = true;
+      this.autoCloseMessage();
+    },
+    autoCloseMessage() {
+      setTimeout(() => {
+        this.message = "";
+        this.alertSwitch = false;
+      }, 5000);
     },
   },
 });
