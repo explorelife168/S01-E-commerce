@@ -7,12 +7,13 @@
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
   .card-container {
     position: relative;
     width: 700px;
-    height: 700px;
+    height: 650px;
     background-color: #fff;
-    top: 50%;
+    top: 55%;
     transform: translateY(-50%);
     .title {
       position: relative;
@@ -206,7 +207,7 @@
             width: 65px;
             height: 35px;
             right: 25px;
-            bottom: 0;
+            bottom: 40px;
             font-size: 1rem;
             background-color: #fff;
             border-radius: 3px;
@@ -218,7 +219,7 @@
             width: 65px;
             height: 35px;
             right: 100px;
-            bottom: 0;
+            bottom: 40px;
             font-size: 1rem;
             background-color: #202529;
             color: #fff;
