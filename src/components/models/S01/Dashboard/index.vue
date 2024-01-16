@@ -15,6 +15,9 @@
     >
       <NewProduct />
     </div>
+    <div class="check-product">
+      <CheckProduct />
+    </div>
     <AlertMessage />
   </div>
 </template>
@@ -26,6 +29,7 @@ import AlertMessage from "../../../global/AlertMessage/index.vue";
 import Navbar from "../../../global/Navbar/index.vue";
 import Sidebar from "../../../global/Sidebar/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
+import CheckProduct from "../../../global/CheckProduct/index.vue";
 import { modelConfig } from "../modelConfig";
 
 const modelConfigController = ref(modelConfig);
