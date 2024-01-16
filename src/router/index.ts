@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
-    meta: { requireAuth: true }, // router驗證
+    name: "Dashboard",
+    component: () => import("../components/models/S01/Dashboard/index.vue"),
+    children: [
+      {
+        path: "customer_order",
+        name: "customerOrder",
+        component: () =>
+          import("../components/global/CustomerOrders/index.vue"),
+      },
+    ],
   },
   {
     path: "/login",
