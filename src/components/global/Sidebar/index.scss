@@ -1,31 +1,33 @@
 .sidebar-wrap {
   position: relative;
-  // width: calc(17% - 2px);
-  width: 15%;
-  min-width: calc(150px - 2px);
+  width: 100%;
   height: 100%;
   background-color: #2a3036;
   border: 1px solid #495057;
   .menu {
     width: 100%;
+
     ul {
       position: relative;
       padding-top: 15%;
       padding-inline-start: 10px;
       li {
         list-style: none;
-        margin-bottom: 7%;
-        color: #6aa2ff;
-        font-weight: bold;
-        font-size: 0.9rem;
-
+        a {
+          text-decoration: none;
+          margin-bottom: 7%;
+          color: #6aa2ff;
+          font-weight: bold;
+          font-size: 0.9rem;
+        }
         &:hover {
           color: #2665e0;
           cursor: pointer;
         }
-        &:nth-child(7) {
+        &:nth-child(1),
+        &:nth-child(3) {
           color: #b1b5bb;
-          margin-top: 25%;
+          margin-top: 15%;
           &:hover {
             cursor: text;
           }

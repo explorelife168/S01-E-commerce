@@ -7,5 +7,12 @@
     display: flex;
     width: 100%;
     height: calc(100% - 72px);
+    .left {
+      width: calc(15% - 2px);
+      min-width: calc(150px - 2px);
+    }
+    .right {
+      width: 85%;
+    }
   }
 }

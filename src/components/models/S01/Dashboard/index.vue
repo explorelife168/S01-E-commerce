@@ -2,8 +2,12 @@
   <div class="dashboard-wrap">
     <Navbar />
     <div class="flex">
-      <Sidebar />
-      <router-view></router-view>
+      <div class="left">
+        <Sidebar />
+      </div>
+      <div class="right">
+        <router-view></router-view>
+      </div>
     </div>
     <div
       class="new-product-cards"
