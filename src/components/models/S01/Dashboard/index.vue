@@ -15,7 +15,7 @@
     >
       <NewProduct />
     </div>
-    <div class="check-product">
+    <div class="check-product" v-if="modelConfigController.checkProductSwitch">
       <CheckProduct />
     </div>
     <AlertMessage />

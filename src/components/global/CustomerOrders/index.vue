@@ -23,7 +23,7 @@
       </div>
       <div class="order-carts-footer">
         <div class="see-more">
-          <button>See more</button>
+          <button @click="createNewProduct">See more</button>
         </div>
         <div class="add-carts">
           <button>Add to cart</button>
@@ -104,11 +104,11 @@
 
 <script lang="ts" setup>
 // import axios from "axios";
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import useDataStore from "../../../stores/useDataStore";
-// import modelConfig from "@/components/models/S01/modelConfig";
+import modelConfig from "@/components/models/S01/modelConfig";
 // import config from "../../../../config/dev.env";
 import currency from "../../../utils/filters/currency"; // 小數點
 
@@ -132,7 +132,7 @@ const dataStore = useDataStore();
 const updateProducts = computed(() => dataStore.products);
 
 // // const products = ref(); //產品List
-// const modelConfigController = ref(modelConfig); //控制模型
+const modelConfigController = ref(modelConfig); //控制模型
 
 // // const isLoading = ref(false);
 
@@ -140,13 +140,10 @@ const updateProducts = computed(() => dataStore.products);
 // const updateProducts = computed(() => dataStore.products);
 // const pagination = computed(() => dataStore.pagination);
 
-// // // 開啟建立新產品及編輯產品開關
-// const createNewProduct = () => {
-//   return (
-//     (modelConfigController.value.editProducts = false),
-//     (modelConfigController.value.createNewProduct = true)
-//   );
-// };
+// // 開啟建立新產品及編輯產品開關
+const createNewProduct = () => {
+  return (modelConfigController.value.checkProductSwitch = true);
+};
 
 // // 刪除產品
 // const deleteProducts = (id: string) => {
