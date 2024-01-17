@@ -1,6 +1,6 @@
 <template>
   <div class="product-wrap">
-    <loading v-model:active="dataStore.isLoading" />
+    <loading v-model:active="isLoading" />
     <div class="create-btn">
       <button class="btn" @click="createNewProduct">建立新的產品</button>
     </div>
@@ -102,7 +102,7 @@ const dataStore = useDataStore();
 // const products = ref(); //產品List
 const modelConfigController = ref(modelConfig); //控制模型
 
-// const isLoading = ref(false);
+const isLoading = ref(false);
 
 // 產品畫面顯示
 const updateProducts = computed(() => dataStore.products);
@@ -118,14 +118,14 @@ const createNewProduct = () => {
 
 // 刪除產品
 const deleteProducts = (id: string) => {
-  dataStore.isLoading = true;
+  isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/product/${id}`;
   axios
     .delete(api, { data: id })
     .then((response) => {
       if (response.data.success) console.log("刪除商品成功");
       dataStore.getProducts();
-      dataStore.isLoading = false;
+      isLoading.value = false;
     })
     .catch((error) => {
       console.error(error);

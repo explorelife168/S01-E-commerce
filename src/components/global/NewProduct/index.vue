@@ -1,6 +1,6 @@
 <template>
   <div class="new-product-container">
-    <loading v-model:active="dataStore.isLoading" />
+    <loading v-model:active="isLoading" />
     <div class="card-container">
       <div class="title">
         <div
@@ -25,7 +25,6 @@
           </div>
           <div class="transmit-image">
             <div class="transmit-image-text" v-text="'或 上傳圖片'"></div>
-            <loading v-model:active="dataStore.isLoading" />
             <input
               type="file"
               placeholder="未選擇任何檔案"
@@ -175,6 +174,8 @@ const modelConfigController = ref(modelConfig);
 
 const buttonDisabled = ref(false); // 新增產品按鈕防呆
 
+const isLoading = ref(false);
+
 // 點擊產品編輯後計算編輯頁面這的值
 const editProductsList = computed(() => {
   if (modelConfigController.value.editProducts) {
@@ -207,7 +208,7 @@ const handleClick = () => {
 
 const createProducts = () => {
   buttonDisabled.value = true;
-  dataStore.isLoading = true;
+  isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/product`;
   axios
     .post(api, { data: creteNewProducts.value })
@@ -216,7 +217,7 @@ const createProducts = () => {
       closureController(); //新增成功後,關閉產品新增畫面
       dataStore.getProducts(); //新增後更新畫面
       buttonDisabled.value = false;
-      dataStore.isLoading = true;
+      isLoading.value = false;
     })
     .catch((error) => {
       console.error(error);
@@ -224,7 +225,7 @@ const createProducts = () => {
 };
 
 const editProducts = () => {
-  dataStore.isLoading = true;
+  isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/product/${modelConfig.productsId}`;
   axios
     .put(api, { data: creteNewProducts.value })
@@ -232,7 +233,7 @@ const editProducts = () => {
       if (response.data.success) console.log("產品更新成功");
       dataStore.getProducts();
       closureController();
-      dataStore.isLoading = false;
+      isLoading.value = false;
     })
     .catch((error) => {
       console.error(error);
@@ -240,6 +241,7 @@ const editProducts = () => {
 };
 
 const uploadFile = (e: Event) => {
+  isLoading.value = true;
   const target = e.target as HTMLInputElement;
   const files = target.files;
   if (!files || !files[0]) return;
@@ -253,6 +255,7 @@ const uploadFile = (e: Event) => {
       if (response.data.success) {
         creteNewProducts.value.imageUrl = response.data.imageUrl;
         console.log("圖片上傳成功");
+        isLoading.value = false;
       } else {
         if (!response.data.success) {
           dataStore.errorMessage(response.data.message);

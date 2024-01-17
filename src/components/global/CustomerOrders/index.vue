@@ -1,6 +1,6 @@
 <template>
   <div class="order-container">
-    <loading v-model:active="dataStore.isLoading" />
+    <loading v-model:active="isLoading" />
     <div class="order-carts" v-for="cart in updateProducts" :key="cart.id">
       <div
         class="order-pictures"
@@ -9,6 +9,7 @@
         }"
       ></div>
       <div class="order-product-name">
+        </svg>
         <div class="flex-center">
           {{ cart.title }}
         </div>
@@ -23,7 +24,7 @@
       </div>
       <div class="order-carts-footer">
         <div class="see-more">
-          <button @click="createNewProduct">See more</button>
+          <button @click="createNewProduct(cart.id)">See more</button>
         </div>
         <div class="add-carts">
           <button>Add to cart</button>
@@ -104,6 +105,7 @@
 
 <script lang="ts" setup>
 // import axios from "axios";
+// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { ref, computed } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
@@ -134,15 +136,23 @@ const updateProducts = computed(() => dataStore.products);
 // // const products = ref(); //產品List
 const modelConfigController = ref(modelConfig); //控制模型
 
-// // const isLoading = ref(false);
+const isLoading = ref(false);
 
 // // 產品畫面顯示
 // const updateProducts = computed(() => dataStore.products);
 // const pagination = computed(() => dataStore.pagination);
 
 // // 開啟建立新產品及編輯產品開關
-const createNewProduct = () => {
-  return (modelConfigController.value.checkProductSwitch = true);
+const createNewProduct = async (id: string) => {
+  isLoading.value = true;
+  try {
+    await dataStore.getProduct(id);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    modelConfigController.value.checkProductSwitch = true;
+    isLoading.value = false;
+  }
 };
 
 // // 刪除產品
