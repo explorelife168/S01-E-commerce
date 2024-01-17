@@ -9,7 +9,6 @@
         }"
       ></div>
       <div class="order-product-name">
-        </svg>
         <div class="flex-center">
           {{ cart.title }}
         </div>
