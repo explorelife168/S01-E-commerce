@@ -17,6 +17,21 @@ interface UpdateProductsList {
   num: number;
   image: string;
 }
+
+interface UpdateProductList {
+  category: string;
+  content: string;
+  description: string;
+  id: string;
+  imageUrl: string;
+  is_enabled: number;
+  origin_price: number;
+  price: number;
+  title: string;
+  unit: string;
+  num: number;
+  image: string;
+}
 interface UpdatePagination {
   category: null;
   current_page: number;
@@ -27,6 +42,7 @@ interface UpdatePagination {
 
 type UseDataStore = {
   products: UpdateProductsList[];
+  product: UpdateProductList;
   pagination: UpdatePagination;
   message: string;
   alertSwitch: boolean;
@@ -38,6 +54,7 @@ const useDataStore = defineStore({
   id: "Data",
   state: (): UseDataStore => ({
     products: [],
+    product: {} as UpdateProductList,
     pagination: {} as UpdatePagination,
     message: "",
     alertSwitch: false,
@@ -56,6 +73,16 @@ const useDataStore = defineStore({
         this.pagination = response.data.pagination;
         console.log(response);
         this.isLoading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getProduct(id: string) {
+      try {
+        const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/product/${id}`;
+        const response = await axios.get(api);
+        this.product = response.data.product;
+        console.log(response);
       } catch (error) {
         console.error(error);
       }
