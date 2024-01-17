@@ -1,7 +1,49 @@
 <template>
-  <div class="new-product-container">
-    <!-- <loading v-model:active="dataStore.isLoading" />
-    <div class="card-container">
+  <div class="check-product-container">
+    <div class="check-cart-container">
+      <div
+        class="check-cart-image"
+        :style="{ 'background-image': `url(${checkProduct.imageUrl})` }"
+      ></div>
+      <div class="check-cart-info">
+        <div class="closure">
+          <button @click="checkProductSwitch">X</button>
+        </div>
+        <div class="check-cart-title" v-text="`${checkProduct.title}`"></div>
+        <div class="check-cart-content">
+          {{ checkProduct.description }}
+        </div>
+        <div class="check-cart-price">
+          <div class="price">{{ currency(checkProduct.price) }}</div>
+          <div class="origin-price">
+            {{ currency(checkProduct.origin_price) }}
+          </div>
+        </div>
+        <div class="check-cart-quantity">
+          <div class="quantity-title" v-text="'Quantity:'"></div>
+          <select name="quantity" id="selectQuantity" v-model="selectQuantity">
+            <!-- <option value="">Quantity</option> -->
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+        <div
+          class="subtotal-price"
+          v-text="`Subtotal:${currency(subTotalPrice)}`"
+        ></div>
+        <div class="check-cart-add">
+          <button>Add Carts</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="card-container">
       <div class="title">
         <div
           class="title-name"
@@ -9,9 +51,7 @@
             `${modelConfigController.editProducts ? '編輯產品' : '新增產品'}`
           "
         ></div>
-        <div class="closure">
-          <button @click="closureController">X</button>
-        </div>
+        
       </div>
       <div class="content">
         <div class="content-left">
@@ -130,16 +170,17 @@
         </div>
       </div>
     </div> -->
-  </div>
 </template>
 
 <script lang="ts" setup>
 // import axios from "axios";
-// import { ref, computed } from "vue";
+import { ref, computed } from "vue";
 // import Loading from "vue-loading-overlay";
 // import "vue-loading-overlay/dist/css/index.css";
-// import { modelConfig } from "../../models/S01/modelConfig";
-// import useDataStore from "../../../utils/filters/currency";
+import { modelConfig } from "../../models/S01/modelConfig";
+import useDataStore from "../../../stores/useDataStore";
+import currency from "../../../utils/filters/currency";
+
 // import config from "../../../../config/dev.env";
 
 // interface CreateNewProducts {
@@ -169,9 +210,21 @@
 //   is_enabled: "2",
 //   image: "",
 // });
-// const dataStore = useDataStore();
+const dataStore = useDataStore();
 
-// const modelConfigController = ref(modelConfig);
+const modelConfigController = ref(modelConfig);
+
+const selectQuantity = ref(1);
+
+const checkProduct = computed(() => dataStore.product);
+
+const subTotalPrice = computed(
+  () => checkProduct.value.price * Number(selectQuantity.value)
+);
+
+const checkProductSwitch = () => {
+  return (modelConfigController.value.checkProductSwitch = false);
+};
 
 // const buttonDisabled = ref(false); // 新增產品按鈕防呆
 
