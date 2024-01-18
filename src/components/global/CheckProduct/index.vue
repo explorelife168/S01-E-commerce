@@ -22,15 +22,7 @@
         <div class="check-cart-quantity">
           <div class="quantity-title" v-text="'Quantity:'"></div>
           <select name="quantity" id="selectQuantity" v-model="selectQuantity">
-            <!-- <option value="">Quantity</option> -->
-            <option value="1" selected>1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
+            <option :value="qty" v-for="qty in 10" :key="qty">{{ qty }}</option>
           </select>
         </div>
         <div
