@@ -34,8 +34,9 @@
     <!-- 購物車圖示 -->
     <div
       class="add-carts-icon"
-      v-if="!cartsModel"
-      @click="cartsModelController"
+      v-show="!cartsModel"
+      @click="cartsOpenModelController"
+      ref="cartsIcon"
     >
       <font-awesome-icon
         icon="fa-solid fa-cart-shopping"
@@ -44,13 +45,13 @@
       <div class="add-carts-qty" v-text="'45'"></div>
     </div>
     <!-- 購物車 -->
-    <div class="carts-sidebar-cover" v-if="cartsModel">
-      <div class="carts-sidebar-container">
+    <div class="carts-sidebar-cover" v-show="cartsModel">
+      <div class="carts-sidebar-container" ref="carts">
         <div class="carts-header">
           <div class="carts-title" v-text="'Your Carts'"></div>
           <div class="close-btn">
             <font-awesome-icon
-              @click="cartsModelController"
+              @click="cartsCloseModelController"
               icon="fa-solid fa-xmark"
             />
           </div>
@@ -98,6 +99,7 @@
 <script lang="ts" setup>
 // import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { gsap } from "gsap";
 import { ref, computed } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
@@ -116,6 +118,10 @@ const cartsModel = ref(false);
 
 const isLoading = ref(false);
 
+const carts = ref(null);
+
+const cartsIcon = ref(null);
+
 const clickProduct = async (id: string) => {
   isLoading.value = true;
   try {
@@ -128,9 +134,38 @@ const clickProduct = async (id: string) => {
   }
 };
 
-const cartsModelController = (): boolean => {
-  return (cartsModel.value = !cartsModel.value);
+const cartsOpenModelController = () => {
+  cartsModel.value = true;
+  gsap.set(carts.value, { x: 0, opacity: 1 });
+  gsap.from(carts.value, {
+    x: 300,
+    duration: 0.5,
+    opacity: 1,
+    ease: "easeInOut",
+  });
 };
+const cartsCloseModelController = () => {
+  gsap.to(carts.value, {
+    x: 300,
+    duration: 0.5,
+    opacity: 0,
+    ease: "easeInOut",
+    onComplete: () => {
+      cartsModel.value = false;
+      gsap.from(cartsIcon.value, {
+        y: -100,
+        duration: 1,
+        opacity: 1,
+        ease: "back.out",
+      });
+    },
+  });
+};
+// watch(cartsModel, () => {
+//   if (cartsModel.value) {
+
+//   }
+// });
 
 dataStore.getProducts(); // 產品建立初始化
 </script>
