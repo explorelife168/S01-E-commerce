@@ -8,19 +8,19 @@
           <form action="">
             <div class="userData-name">
               <label for="name">Name:</label>
-              <input type="text" />
+              <input type="text" v-model="dataInfo.name" />
             </div>
             <div class="userData-email">
               <label for="email">E-mail:</label>
-              <input type="text" />
+              <input type="text" v-model="dataInfo.email" />
             </div>
             <div class="userData-tel">
               <label for="tel">Tel:</label>
-              <input type="text" />
+              <input type="text" v-model="dataInfo.tel" />
             </div>
             <div class="userData-address">
               <label for="address">Address:</label>
-              <input type="text" />
+              <input type="text" v-model="dataInfo.address" />
             </div>
           </form>
         </div>
@@ -29,7 +29,11 @@
             <form action="">
               <div class="userData-message">
                 <label for="message">Message:</label>
-                <textarea name="message" id=""></textarea>
+                <textarea
+                  name="message"
+                  id=""
+                  v-model="dataInfo.message"
+                ></textarea>
               </div>
             </form>
             <div class="form-btn">
@@ -37,7 +41,7 @@
                 <button @click="closeInfo">Back</button>
               </div>
               <div class="next-btn">
-                <button @click.prevent="">Next</button>
+                <button @click.prevent="createOrder">Next</button>
               </div>
             </div>
           </div>
@@ -48,18 +52,34 @@
 </template>
 
 <script lang="ts" setup>
-// import axios from "axios";
+import axios from "axios";
 import { ref } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import { modelConfig } from "../../models/S01/modelConfig";
-// import useDataStore from "../../../stores/useDataStore";
+import useDataStore from "../../../stores/useDataStore";
 // import currency from "../../../utils/filters/currency";
-// import config from "../../../../config/dev.env";
+import config from "../../../../config/dev.env";
 
-// const dataStore = useDataStore();
+interface DataInfo {
+  name: string;
+  email: string;
+  tel: string;
+  address: string;
+  message: string;
+}
+
+const dataStore = useDataStore();
 
 const modelConfigController = ref(modelConfig);
+
+const dataInfo = ref<DataInfo>({
+  name: "",
+  email: "",
+  tel: "",
+  address: "",
+  message: "",
+});
 
 // const selectQuantity = ref(1);
 
@@ -69,6 +89,31 @@ const closeInfo = (): boolean => {
   return (modelConfigController.value.userDataSwitch = false);
 };
 
+const createOrder = () => {
+  isLoading.value = true;
+  const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/order`;
+  axios
+    .post(api, {
+      data: {
+        user: {
+          name: dataInfo.value.name,
+          email: dataInfo.value.email,
+          tel: dataInfo.value.tel,
+          address: dataInfo.value.address,
+        },
+        message: dataInfo.value.message,
+      },
+    })
+    .then((response) => {
+      console.log(response);
+      dataStore.getCartsItem();
+      closeInfo();
+      isLoading.value = false;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 // const checkProduct = computed(() => dataStore.product);
 
 // const subTotalPrice = computed(
