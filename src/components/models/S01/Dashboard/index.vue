@@ -18,6 +18,9 @@
     <div class="check-product" v-if="modelConfigController.checkProductSwitch">
       <CheckProduct />
     </div>
+    <div class="userData" v-if="modelConfigController.userDataSwitch">
+      <UserData />
+    </div>
     <AlertMessage />
   </div>
 </template>
@@ -30,6 +33,7 @@ import Navbar from "../../../global/Navbar/index.vue";
 import Sidebar from "../../../global/Sidebar/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
 import CheckProduct from "../../../global/CheckProduct/index.vue";
+import UserData from "../../../global/UserData/index.vue";
 import { modelConfig } from "../modelConfig";
 
 const modelConfigController = ref(modelConfig);

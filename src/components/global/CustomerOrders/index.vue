@@ -94,13 +94,16 @@
               <button @click="addCouponCode">confirm</button>
             </div>
           </div>
-          <div class="subtotal" v-text="`Subtotal: ${dataStore.total}`"></div>
+          <div
+            class="subtotal"
+            v-text="`Subtotal: ${currency(dataStore.total)}`"
+          ></div>
           <div
             class="discount-price"
-            v-text="`Discount price:  ${dataStore.final_total}`"
+            v-text="`Discount price:  ${currency(dataStore.final_total)}`"
           ></div>
           <div class="add-btn">
-            <button>Proceed to checkout</button>
+            <button @click="addUserData">Proceed to checkout</button>
           </div>
         </div>
       </div>
@@ -221,6 +224,13 @@ const addCouponCode = () => {
     .catch((error) => {
       console.error(error);
     });
+};
+
+// 客戶資料填寫頁面
+const addUserData = () => {
+  if (dataStore.cartsItem.length === 0) return;
+  modelConfigController.value.userDataSwitch = true;
+  cartsModel.value = false;
 };
 
 dataStore.getProducts(); // 產品建立初始化
