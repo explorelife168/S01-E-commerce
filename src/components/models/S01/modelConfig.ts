@@ -4,7 +4,7 @@ export type ModelConfig = {
   checkProductSwitch: boolean;
   editProducts: boolean;
   productsId: string;
-  userData: boolean;
+  userDataSwitch: boolean;
 };
 
 const modelConfig: ModelConfig = {
@@ -12,7 +12,7 @@ const modelConfig: ModelConfig = {
   checkProductSwitch: false, // see more畫面開關
   editProducts: true, // true -> 編輯產品 , false -> 新增產品
   productsId: "", // 確認產品Id edit用
-  userData: false, // 客戶資訊頁面
+  userDataSwitch: false, // 客戶資訊頁面
 };
 
 export default modelConfig;
