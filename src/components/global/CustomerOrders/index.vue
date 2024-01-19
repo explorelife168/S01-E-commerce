@@ -27,7 +27,7 @@
           <button @click="clickProduct(cart.id)">See more</button>
         </div>
         <div class="add-carts">
-          <button>Add to cart</button>
+          <button @click="addCart(cart.id, 1)">Add to cart</button>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
         icon="fa-solid fa-cart-shopping"
         style="color: #fff; font-size: 1.4rem"
       />
-      <div class="add-carts-qty" v-text="'45'"></div>
+      <div class="add-carts-qty" v-text="`${dataStore.cartsItem.length}`"></div>
     </div>
     <!-- 購物車 -->
     <div class="carts-sidebar-cover" v-show="cartsModel">
@@ -57,36 +57,48 @@
           </div>
         </div>
         <div class="carts-body">
-          <div class="carts-item" v-for="bag in updateProducts" :key="bag.id">
+          <div class="carts-item" v-for="item in updateItem" :key="item.id">
             <div class="carts-image-container">
               <div
                 class="carts-image"
                 :style="{
-                  'background-image': `url(${bag.imageUrl})`,
+                  'background-image': `url(${item.product.imageUrl})`,
                 }"
               ></div>
             </div>
             <div class="carts-info">
               <div class="carts-trashcan">
-                <font-awesome-icon icon="fa-regular fa-trash-can" />
+                <font-awesome-icon
+                  @click="deleteCart(item.id)"
+                  icon="fa-regular fa-trash-can"
+                />
               </div>
-              <div class="carts-title">{{ bag.title }}</div>
-              <div class="carts-qty">{{ "Qty: 1" }}</div>
-              <div class="carts-price">{{ currency(bag.price) }}</div>
+              <div class="carts-title">{{ item.product.title }}</div>
+              <div class="carts-qty">{{ `Qty: ${item.qty}` }}</div>
+              <div class="carts-price">
+                {{ currency(item.final_total) }}
+              </div>
             </div>
           </div>
         </div>
         <div class="carts-footer">
           <div class="discount-input">
             <div class="input-code">
-              <input type="text" placeholder="Enter your discount code" />
+              <input
+                type="text"
+                placeholder="Enter your discount code"
+                v-model="couponCode"
+              />
             </div>
             <div class="confirm-btn">
-              <button>confirm</button>
+              <button @click="addCouponCode">confirm</button>
             </div>
           </div>
-          <div class="subtotal" v-text="'Subtotal: $11,000'"></div>
-          <div class="discount-price" v-text="'Discount price:  $10,000'"></div>
+          <div class="subtotal" v-text="`Subtotal: ${dataStore.total}`"></div>
+          <div
+            class="discount-price"
+            v-text="`Discount price:  ${dataStore.final_total}`"
+          ></div>
           <div class="add-btn">
             <button>Proceed to checkout</button>
           </div>
@@ -97,7 +109,7 @@
 </template>
 
 <script lang="ts" setup>
-// import axios from "axios";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { gsap } from "gsap";
 import { ref, computed } from "vue";
@@ -105,12 +117,10 @@ import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import useDataStore from "../../../stores/useDataStore";
 import modelConfig from "@/components/models/S01/modelConfig";
-// import config from "../../../../config/dev.env";
+import config from "../../../../config/dev.env";
 import currency from "../../../utils/filters/currency"; // 小數點
 
 const dataStore = useDataStore();
-
-const updateProducts = computed(() => dataStore.products);
 
 const modelConfigController = ref(modelConfig); //控制模型
 
@@ -121,6 +131,11 @@ const isLoading = ref(false);
 const carts = ref(null);
 
 const cartsIcon = ref(null);
+
+const couponCode = ref("");
+
+const updateProducts = computed(() => dataStore.products);
+const updateItem = computed(() => dataStore.cartsItem);
 
 const clickProduct = async (id: string) => {
   isLoading.value = true;
@@ -144,6 +159,7 @@ const cartsOpenModelController = () => {
     ease: "easeInOut",
   });
 };
+
 const cartsCloseModelController = () => {
   gsap.to(carts.value, {
     x: 300,
@@ -161,13 +177,54 @@ const cartsCloseModelController = () => {
     },
   });
 };
-// watch(cartsModel, () => {
-//   if (cartsModel.value) {
 
-//   }
-// });
+const addCart = (id: string, qty: number) => {
+  isLoading.value = true;
+  const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
+  axios
+    .post(api, { data: { product_id: id, qty: qty } })
+    .then((response) => {
+      console.log(response);
+      isLoading.value = false;
+      dataStore.getCartsItem();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+const deleteCart = (id: string) => {
+  isLoading.value = true;
+  const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart/${id}`;
+  axios
+    .delete(api)
+    .then((response) => {
+      console.log(response);
+      dataStore.getCartsItem();
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+};
+
+const addCouponCode = () => {
+  const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/coupon`;
+  axios
+    .post(api, { data: { code: couponCode.value } })
+    .then((response) => {
+      console.log(response);
+      console.log(couponCode.value);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
 dataStore.getProducts(); // 產品建立初始化
+dataStore.getCartsItem();
 </script>
 
 <style lang="scss" scoped>

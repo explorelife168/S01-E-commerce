@@ -1,5 +1,6 @@
 <template>
   <div class="check-product-container">
+    <loading v-model:active="isLoading" />
     <div class="check-cart-container">
       <div
         class="check-cart-image"
@@ -30,150 +31,24 @@
           v-text="`Subtotal:${currency(subTotalPrice)}`"
         ></div>
         <div class="check-cart-add">
-          <button>Add Carts</button>
+          <button @click="addCart(checkProduct.id, selectQuantity)">
+            Add Carts
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="card-container">
-      <div class="title">
-        <div
-          class="title-name"
-          v-text="
-            `${modelConfigController.editProducts ? '編輯產品' : '新增產品'}`
-          "
-        ></div>
-        
-      </div>
-      <div class="content">
-        <div class="content-left">
-          <div class="input-image">
-            <div class="input-image-text" v-text="'輸入圖片網址'"></div>
-            <input
-              type="text"
-              placeholder="請輸入圖片連結"
-              v-model="creteNewProducts.imageUrl"
-            />
-          </div>
-          <div class="transmit-image">
-            <div class="transmit-image-text" v-text="'或 上傳圖片'"></div>
-            <loading v-model:active="dataStore.isLoading" />
-            <input
-              type="file"
-              placeholder="未選擇任何檔案"
-              @change="uploadFile"
-            />
-            <div class="product-image">
-              <img
-                :src="creteNewProducts.imageUrl"
-                v-if="creteNewProducts.imageUrl"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
-        <div class="content-right">
-          <div class="input-title">
-            <div class="input-title-text" v-text="'標題'"></div>
-            <input
-              type="text"
-              placeholder="請輸入標題"
-              v-model="creteNewProducts.title"
-            />
-          </div>
-          <div class="type-unit-flex">
-            <div class="input-type">
-              <div class="type-text" v-text="'分類'"></div>
-              <input
-                type="text"
-                placeholder="請輸入分類"
-                v-model="creteNewProducts.category"
-              />
-            </div>
-            <div class="input-unit">
-              <div class="unit-text" v-text="'單位'"></div>
-              <input
-                type="text"
-                placeholder="請輸入單位"
-                v-model="creteNewProducts.unit"
-              />
-            </div>
-          </div>
-          <div class="price-sell-flex">
-            <div class="input-price">
-              <div class="price-text" v-text="'原價'"></div>
-              <input
-                type="text"
-                placeholder="請輸入原價"
-                v-model="creteNewProducts.origin_price"
-              />
-            </div>
-            <div class="input-sell">
-              <div class="sell-text" v-text="'單位售價'"></div>
-              <input
-                type="text"
-                placeholder="請輸入售價"
-                v-model="creteNewProducts.price"
-              />
-            </div>
-          </div>
-          <div class="describe">
-            <div class="describe-text" v-text="'產品描述'"></div>
-            <textarea
-              name="產品描述"
-              id=""
-              placeholder="請輸入產品描述"
-              v-model="creteNewProducts.description"
-            ></textarea>
-          </div>
-
-          <div class="content-description">
-            <div class="content-description-text" v-text="'說明內容'"></div>
-            <textarea
-              name="說明內容"
-              id=""
-              placeholder="請輸入產品說明內容"
-              v-model="creteNewProducts.content"
-            ></textarea>
-          </div>
-          <div class="form-enable">
-            <input
-              class="form-enable-input"
-              type="checkbox"
-              id="formEnableDefault"
-              v-model="creteNewProducts.is_enabled"
-              :true-value="1"
-              :false-value="2"
-            />
-            <label class="form-enable-label" for="formEnableDefault"
-              >是否啟用</label
-            >
-          </div>
-          <div class="buttonContainer">
-            <button
-              class="confirm"
-              @click="handleClick"
-              :disabled="buttonDisabled"
-            >
-              {{ modelConfigController.editProducts ? "修改" : "新增" }}
-            </button>
-            <button class="cancel" @click="closureController">取消</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
 </template>
 
 <script lang="ts" setup>
-// import axios from "axios";
+import axios from "axios";
 import { ref, computed } from "vue";
-// import Loading from "vue-loading-overlay";
-// import "vue-loading-overlay/dist/css/index.css";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 import { modelConfig } from "../../models/S01/modelConfig";
 import useDataStore from "../../../stores/useDataStore";
 import currency from "../../../utils/filters/currency";
-
-// import config from "../../../../config/dev.env";
+import config from "../../../../config/dev.env";
 
 // interface CreateNewProducts {
 //   category: string;
@@ -208,6 +83,8 @@ const modelConfigController = ref(modelConfig);
 
 const selectQuantity = ref(1);
 
+const isLoading = ref(false);
+
 const checkProduct = computed(() => dataStore.product);
 
 const subTotalPrice = computed(
@@ -216,6 +93,21 @@ const subTotalPrice = computed(
 
 const checkProductSwitch = () => {
   return (modelConfigController.value.checkProductSwitch = false);
+};
+
+const addCart = (id: string, qty: number) => {
+  isLoading.value = true;
+  const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
+  axios
+    .post(api, { data: { product_id: id, qty: qty } })
+    .then((response) => {
+      console.log(response);
+      modelConfigController.value.checkProductSwitch = false;
+      dataStore.getCartsItem();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
 
 // const buttonDisabled = ref(false); // 新增產品按鈕防呆

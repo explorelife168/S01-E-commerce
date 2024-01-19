@@ -32,6 +32,7 @@ interface UpdateProductList {
   num: number;
   image: string;
 }
+
 interface UpdatePagination {
   category: null;
   current_page: number;
@@ -40,14 +41,41 @@ interface UpdatePagination {
   total_pages: number;
 }
 
+interface updateCartsItem {
+  category: string;
+  content: string;
+  description: string;
+  id: string;
+  imageUrl: string;
+  is_enabled: number;
+  origin_price: number;
+  price: number;
+  title: string;
+  unit: string;
+  num: number;
+  image: string;
+}
+
+interface updateCartsAllItems {
+  final_total: number;
+  id: string;
+  product: updateCartsItem;
+  product_id: string;
+  qty: number;
+  total: number;
+}
+
 type UseDataStore = {
   products: UpdateProductsList[];
   product: UpdateProductList;
+  cartsItem: updateCartsAllItems[];
   pagination: UpdatePagination;
   message: string;
   alertSwitch: boolean;
   stopMessageSwitch: boolean;
   isLoading: boolean;
+  final_total: number;
+  total: number;
 };
 
 const useDataStore = defineStore({
@@ -55,11 +83,14 @@ const useDataStore = defineStore({
   state: (): UseDataStore => ({
     products: [],
     product: {} as UpdateProductList,
+    cartsItem: [],
     pagination: {} as UpdatePagination,
     message: "",
     alertSwitch: false,
     stopMessageSwitch: false,
     isLoading: false,
+    final_total: 0,
+    total: 0,
   }),
   getters: {},
   actions: {
@@ -77,6 +108,7 @@ const useDataStore = defineStore({
         console.error(error);
       }
     },
+
     async getProduct(id: string) {
       try {
         const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/product/${id}`;
@@ -87,12 +119,28 @@ const useDataStore = defineStore({
         console.error(error);
       }
     },
+
+    async getCartsItem() {
+      try {
+        const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
+        const response = await axios.get(api);
+        this.cartsItem = response.data.data.carts;
+        this.total = response.data.data.total;
+        this.final_total = response.data.data.final_total;
+        console.log(response);
+        console.log(this.cartsItem);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     errorMessage(msg: string) {
       if (this.stopMessageSwitch) return;
       this.message = msg;
       this.alertSwitch = true;
       this.autoCloseMessage();
     },
+
     autoCloseMessage() {
       setTimeout(() => {
         this.message = "";
