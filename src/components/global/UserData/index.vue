@@ -54,6 +54,7 @@
 <script lang="ts" setup>
 import axios from "axios";
 import { ref } from "vue";
+import router from "@/router";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import { modelConfig } from "../../models/S01/modelConfig";
@@ -109,35 +110,14 @@ const createOrder = () => {
       dataStore.getCartsItem();
       closeInfo();
       isLoading.value = false;
+      if (response.data.success)
+        router.push(`/customer_payOrder/${response.data.orderId}`);
+      console.log(response.data.id);
     })
     .catch((error) => {
       console.log(error);
     });
 };
-// const checkProduct = computed(() => dataStore.product);
-
-// const subTotalPrice = computed(
-//   () => checkProduct.value.price * Number(selectQuantity.value)
-// );
-
-// const checkProductSwitch = () => {
-//   return (modelConfigController.value.checkProductSwitch = false);
-// };
-
-// const addCart = (id: string, qty: number) => {
-//   isLoading.value = true;
-//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
-//   axios
-//     .post(api, { data: { product_id: id, qty: qty } })
-//     .then((response) => {
-//       console.log(response);
-//       modelConfigController.value.checkProductSwitch = false;
-//       dataStore.getCartsItem();
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// };
 </script>
 
 <style lang="scss" scoped>
