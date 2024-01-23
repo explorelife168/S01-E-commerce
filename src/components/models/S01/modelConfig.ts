@@ -5,7 +5,6 @@ export type ModelConfig = {
   editProducts: boolean;
   productsId: string;
   userDataSwitch: boolean;
-  payOrderSwitch: boolean;
 };
 
 const modelConfig: ModelConfig = {
@@ -14,7 +13,6 @@ const modelConfig: ModelConfig = {
   editProducts: true, // true -> 編輯產品 , false -> 新增產品
   productsId: "", // 確認產品Id edit用
   userDataSwitch: false, // 客戶資訊頁面
-  payOrderSwitch: false, // 結帳頁面
 };
 
 export default modelConfig;
