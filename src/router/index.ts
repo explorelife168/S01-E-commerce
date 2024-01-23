@@ -12,6 +12,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import("../components/global/CustomerOrders/index.vue"),
       },
+      {
+        path: "customer_payOrder/:orderId",
+        name: "CustomerPayOrder",
+        component: () => import("../components/global/PayOrder/index.vue"),
+      },
     ],
   },
   {
