@@ -35,6 +35,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../components/global/Products/index.vue"),
         meta: { requireAuth: true },
       },
+      {
+        path: "orderStatus",
+        name: "orderStatus",
+        component: () => import("../components/global/OrderStatus/index.vue"),
+        meta: { requireAuth: true },
+      },
     ],
   },
   {
