@@ -21,9 +21,6 @@
     <div class="userData" v-if="modelConfigController.userDataSwitch">
       <UserData />
     </div>
-    <div class="payOrder" v-if="modelConfigController.payOrderSwitch">
-      <PayOrder />
-    </div>
     <AlertMessage />
   </div>
 </template>
@@ -37,7 +34,6 @@ import Sidebar from "../../../global/Sidebar/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
 import CheckProduct from "../../../global/CheckProduct/index.vue";
 import UserData from "../../../global/UserData/index.vue";
-import PayOrder from "../../../global/PayOrder/index.vue";
 import { modelConfig } from "../modelConfig";
 
 const modelConfigController = ref(modelConfig);
