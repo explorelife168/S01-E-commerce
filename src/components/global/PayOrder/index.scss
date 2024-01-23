@@ -15,6 +15,7 @@
       height: 70%;
       overflow: auto;
       table {
+        border-collapse: collapse; /* 让边框相邻 */
         thead {
           th {
             font-size: 0.8rem;
@@ -78,11 +79,14 @@
       width: 40%;
       height: 70%;
       tbody {
-        th {
-          padding: 5% 0 5%;
-        }
-        td {
-          text-align: center;
+        table {
+          border-collapse: collapse; /* 让边框相邻 */
+          th {
+            padding: 5% 0 5%;
+          }
+          td {
+            text-align: center;
+          }
         }
       }
     }
