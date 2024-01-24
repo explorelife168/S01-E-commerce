@@ -240,6 +240,7 @@ const editProducts = () => {
     });
 };
 
+// 檔案文件讀取
 const uploadFile = (e: Event) => {
   isLoading.value = true;
   const target = e.target as HTMLInputElement;
@@ -259,6 +260,7 @@ const uploadFile = (e: Event) => {
       } else {
         if (!response.data.success) {
           dataStore.errorMessage(response.data.message);
+          isLoading.value = false;
         }
       }
     })
