@@ -31,6 +31,43 @@
         </div>
       </div>
     </div>
+    <!-- 按鈕 -->
+    <div class="pagination">
+      <div class="left-btn">
+        <button
+          @click.prevent="dataStore.getProducts(pagination.current_page - 1)"
+          class="left"
+          :class="{ disabled: !pagination.has_pre }"
+        >
+          &lt;&lt;
+        </button>
+      </div>
+
+      <div
+        class="pages-btn"
+        v-for="(pages, index) in pagination.total_pages"
+        :key="index"
+      >
+        <button
+          :class="[
+            `pages-${pages}`,
+            { active: pagination.current_page === pages },
+          ]"
+          @click.prevent="dataStore.getProducts(pages)"
+        >
+          {{ pages }}
+        </button>
+      </div>
+      <div class="right-btn">
+        <button
+          @click.prevent="dataStore.getProducts(pagination.current_page + 1)"
+          class="right"
+          :class="{ disabled: !pagination.has_next }"
+        >
+          >>
+        </button>
+      </div>
+    </div>
     <!-- 購物車圖示 -->
     <div
       class="add-carts-icon"
@@ -137,8 +174,17 @@ const cartsIcon = ref(null);
 
 const couponCode = ref("");
 
+// const pagination = ref({
+//   category: "",
+//   current_page: 1,
+//   has_next: true,
+//   has_pre: false,
+//   total_pages: 1,
+// });
+
 const updateProducts = computed(() => dataStore.products);
 const updateItem = computed(() => dataStore.cartsItem);
+const pagination = computed(() => dataStore.pagination);
 
 const clickProduct = async (id: string) => {
   isLoading.value = true;
