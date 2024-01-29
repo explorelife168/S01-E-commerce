@@ -131,7 +131,7 @@ const useDataStore = defineStore({
     async getProducts(page = 1) {
       try {
         this.isLoading = true;
-        const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/products?page=${page}`;
+        const api = `https://vue-course-api.hexschool.io/api/testapi_2/admin/products?page=${page}`;
         const response = await axios.get(api);
         this.products = response.data.products;
         this.pagination = response.data.pagination;
