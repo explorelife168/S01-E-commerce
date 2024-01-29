@@ -65,6 +65,23 @@ interface updateCartsAllItems {
   total: number;
 }
 
+type UpdateCouponList = {
+  title: string;
+  is_enabled: number;
+  percent: number;
+  due_date: number;
+  code: string;
+  id: string;
+  num: number;
+};
+type CouponPagination = {
+  category: null;
+  current_page: number;
+  has_next: boolean;
+  has_pre: boolean;
+  total_pages: number;
+};
+
 type UseDataStore = {
   products: UpdateProductsList[];
   product: UpdateProductList;
@@ -76,6 +93,8 @@ type UseDataStore = {
   isLoading: boolean;
   final_total: number;
   total: number;
+  updateCouponList: UpdateCouponList[];
+  couponPagination: CouponPagination;
 };
 
 const useDataStore = defineStore({
@@ -91,6 +110,8 @@ const useDataStore = defineStore({
     isLoading: false,
     final_total: 0,
     total: 0,
+    updateCouponList: [],
+    couponPagination: {} as CouponPagination,
   }),
   getters: {},
   actions: {
@@ -131,6 +152,18 @@ const useDataStore = defineStore({
         console.log(this.cartsItem);
       } catch (error) {
         console.error(error);
+      }
+    },
+
+    async getCouponList(page = 1) {
+      try {
+        const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupons?page=${page}`;
+        const response = await axios.get(api);
+        this.updateCouponList = response.data.coupons;
+        this.couponPagination = response.data.pagination;
+        console.log(response);
+      } catch (error) {
+        console.log(error);
       }
     },
 
