@@ -9,6 +9,9 @@
         <li>
           <router-link to="/admin/orderStatus">Order Status</router-link>
         </li>
+        <li>
+          <router-link to="/admin/coupon">Coupon</router-link>
+        </li>
         <li>Analog Function</li>
         <li><router-link to="/customer_order">Orders</router-link></li>
       </ul>
