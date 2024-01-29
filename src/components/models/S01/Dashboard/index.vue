@@ -15,6 +15,9 @@
     >
       <NewProduct />
     </div>
+    <div class="new-coupon-cards" v-if="modelConfigController.createNewCoupon">
+      <NewCoupon />
+    </div>
     <div class="check-product" v-if="modelConfigController.checkProductSwitch">
       <CheckProduct />
     </div>
@@ -32,6 +35,7 @@ import AlertMessage from "../../../global/AlertMessage/index.vue";
 import Navbar from "../../../global/Navbar/index.vue";
 import Sidebar from "../../../global/Sidebar/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
+import NewCoupon from "../../../global/NewCoupon/index.vue";
 import CheckProduct from "../../../global/CheckProduct/index.vue";
 import UserData from "../../../global/UserData/index.vue";
 import { modelConfig } from "../modelConfig";
