@@ -41,6 +41,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../components/global/OrderStatus/index.vue"),
         meta: { requireAuth: false },
       },
+      {
+        path: "coupon",
+        name: "coupon",
+        component: () => import("../components/global/Coupon/index.vue"),
+        meta: { requireAuth: false },
+      },
     ],
   },
   {
