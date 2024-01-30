@@ -70,7 +70,7 @@ const signIn = async () => {
   } catch (error) {
     console.log(error);
   } finally {
-    router.push("/admin/products");
+    router.push("/");
   }
 };
 

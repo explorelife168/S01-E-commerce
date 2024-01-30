@@ -75,11 +75,11 @@ const dataStore = useDataStore();
 const modelConfigController = ref(modelConfig);
 
 const dataInfo = ref<DataInfo>({
-  name: "",
-  email: "",
-  tel: "",
-  address: "",
-  message: "",
+  name: "FontEnd Test Personnel",
+  email: "testapi@gmail.com",
+  tel: "0000-000-000",
+  address: "Taipei",
+  message: "Test only",
 });
 
 // const selectQuantity = ref(1);
@@ -90,11 +90,11 @@ const closeInfo = (): boolean => {
   return (modelConfigController.value.userDataSwitch = false);
 };
 
-const createOrder = () => {
+const createOrder = async () => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/order`;
-  axios
-    .post(api, {
+  try {
+    const response = await axios.post(api, {
       data: {
         user: {
           name: dataInfo.value.name,
@@ -104,19 +104,16 @@ const createOrder = () => {
         },
         message: dataInfo.value.message,
       },
-    })
-    .then((response) => {
-      console.log(response);
-      dataStore.getCartsItem();
-      closeInfo();
-      isLoading.value = false;
-      if (response.data.success)
-        router.push(`/customer_payOrder/${response.data.orderId}`);
-      console.log(response.data.id);
-    })
-    .catch((error) => {
-      console.log(error);
     });
+    dataStore.getCartsItem();
+    closeInfo();
+    if (response.data.success) {
+      isLoading.value = false;
+      router.push(`/customer_payOrder/${response.data.orderId}`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
 

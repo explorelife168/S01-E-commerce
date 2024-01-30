@@ -23,7 +23,7 @@
             <td>{{ order.is_paid ? dateTransfer(order.paid_date) : "" }}</td>
             <td>{{ currency(order.total) }}</td>
             <td :style="{ color: order.message ? 'red' : 'green' }">
-              {{ order.message ? "N" : "Y" }}
+              {{ order.message ? "Y" : "N" }}
             </td>
           </tr>
         </tbody>

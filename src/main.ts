@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { createPinia } from "pinia";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -26,16 +26,20 @@ app
   .mount("#app");
 
 //頁面驗證使用, 在router設定
-router.beforeEach((to, from, next) => {
+
+router.beforeEach(async (to, from, next) => {
   if (to.meta.requireAuth) {
     const api = "https://vue-course-api.hexschool.io/api/user/check";
-    axios.post(api).then((res: AxiosResponse) => {
+    try {
+      const res = await axios.post(api);
       if (res.data.success) {
         next();
       } else {
         next({ path: "/login" });
       }
-    });
+    } catch (error) {
+      console.error("Error checking user authentication:", error);
+    }
   } else {
     next();
   }
