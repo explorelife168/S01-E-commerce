@@ -4,13 +4,13 @@
       <ul>
         <li>Administrator</li>
         <li>
-          <router-link to="/admin/products">Product List</router-link>
+          <router-link to="/admin_products">Product List</router-link>
         </li>
         <li>
-          <router-link to="/admin/orderStatus">Order Status</router-link>
+          <router-link to="/admin_order_status">Order Status</router-link>
         </li>
         <li>
-          <router-link to="/admin/coupon">Coupon</router-link>
+          <router-link to="/admin_coupon">Coupon</router-link>
         </li>
         <li>Analog Function</li>
         <li><router-link to="/customer_order">Orders</router-link></li>

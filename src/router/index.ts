@@ -2,6 +2,11 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: "/login",
+    name: "login",
+    component: () => import("../components/models/S01/login/index.vue"),
+  },
+  {
     path: "/",
     name: "Dashboard",
     component: () => import("../components/models/S01/Dashboard/index.vue"),
@@ -18,30 +23,26 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../components/global/PayOrder/index.vue"),
       },
       {
-        path: "admin/products",
+        path: "admin_products",
         name: "products",
         component: () => import("../components/global/Products/index.vue"),
         meta: { requireAuth: true },
       },
       {
-        path: "admin/order-status",
+        path: "admin_order_status",
         name: "orderStatus",
         component: () => import("../components/global/OrderStatus/index.vue"),
         meta: { requireAuth: true },
       },
       {
-        path: "admin/coupon",
+        path: "admin_coupon",
         name: "coupon",
         component: () => import("../components/global/Coupon/index.vue"),
         meta: { requireAuth: true },
       },
     ],
   },
-  {
-    path: "/login",
-    name: "login",
-    component: () => import("../components/models/S01/login/index.vue"),
-  },
+
   // {
   //   path: "/admin",
   //   name: "admin",

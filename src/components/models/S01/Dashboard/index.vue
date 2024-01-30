@@ -39,7 +39,6 @@ import NewCoupon from "../../../global/NewCoupon/index.vue";
 import CheckProduct from "../../../global/CheckProduct/index.vue";
 import UserData from "../../../global/UserData/index.vue";
 import { modelConfig } from "../modelConfig";
-import config from "../../../../../config/dev.env";
 
 const modelConfigController = ref(modelConfig);
 
@@ -49,24 +48,9 @@ const updateToken = () => {
     "$1"
   );
   axios.defaults.headers.common.Authorization = token;
-  console.log(axios.defaults.headers.common.Authorization);
 };
 
-const checkSingIn = async () => {
-  const api = `${config.API_PATH}/api/user/check`;
-  try {
-    const response = await axios.post(api);
-    if (response.data.success) {
-      console.log("signIn");
-    } else {
-      console.log("unSignIn");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
 updateToken(); //保存cookie以及request時候發送Token驗證用
-checkSingIn();
 </script>
 
 <style lang="scss" scoped>

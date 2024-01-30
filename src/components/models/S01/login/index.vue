@@ -65,7 +65,6 @@ const signIn = async () => {
       const token = response.data.token;
       const expired = response.data.expired;
       document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
-      console.log(document.cookie);
     }
   } catch (error) {
     console.log(error);
@@ -73,21 +72,6 @@ const signIn = async () => {
     router.push("/");
   }
 };
-
-const checkSingIn = async () => {
-  const api = `${config.API_PATH}/api/user/check`;
-  try {
-    const response = await axios.post(api);
-    if (response.data.success) {
-      console.log("signIn");
-    } else {
-      console.log("unSignIn");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-checkSingIn();
 </script>
 
 <style lang="scss" scoped>

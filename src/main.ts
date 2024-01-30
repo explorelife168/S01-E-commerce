@@ -33,8 +33,10 @@ router.beforeEach(async (to, from, next) => {
     try {
       const res = await axios.post(api);
       if (res.data.success) {
+        console.log("main.ts:已登入", res.data);
         next();
       } else {
+        console.log("main.ts:尚未登入");
         next({ path: "/login" });
       }
     } catch (error) {
