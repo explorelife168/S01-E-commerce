@@ -132,6 +132,30 @@ const deleteProducts = (id: string) => {
     });
 };
 
+// const getProducts2 = async (page = 1) => {
+//   try {
+//     const api = `https://vue-course-api.hexschool.io/api/testapi_2/admin/products?page=${page}`;
+//     const response = await axios.get(api);
+
+//     console.log(response);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+const checkSingIn = async () => {
+  const api = `${config.API_PATH}/api/user/check`;
+  try {
+    const response = await axios.post(api);
+    if (response.data.success) {
+      console.log("signIn");
+    } else {
+      console.log("unSignIn");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 const editProducts = (obj: EditProducts) => {
   modelConfigController.value.createNewProduct = true;
   modelConfigController.value.editProducts = true;
@@ -140,6 +164,8 @@ const editProducts = (obj: EditProducts) => {
 
 // getProducts(); //執行 取得產品 API
 dataStore.getProducts();
+checkSingIn();
+// getProducts2();
 </script>
 
 <style lang="scss" scoped>

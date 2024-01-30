@@ -48,7 +48,9 @@ const updateToken = () => {
     "$1"
   );
   axios.defaults.headers.common.Authorization = token;
+  console.log(axios.defaults.headers.common.Authorization);
 };
+
 updateToken(); //保存cookie以及request時候發送Token驗證用
 </script>
 

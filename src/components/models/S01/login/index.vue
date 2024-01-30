@@ -35,15 +35,16 @@
 </template>
 
 <script setup lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { ref, onMounted, reactive } from "vue";
 import router from "@/router";
 import config from "../../../../../config/dev.env";
 
 const currentYears = ref(0);
+
 const user = reactive({
-  username: "",
-  password: "",
+  username: "testapi@gmail.com",
+  password: "123456789",
 });
 
 onMounted(() => {
@@ -56,18 +57,37 @@ const getYears = () => {
   currentYears.value = years;
 };
 
-const signIn = () => {
+const signIn = async () => {
   const api = `${config.API_PATH}/admin/signin`;
-  axios.post(api, user).then((res: AxiosResponse) => {
-    console.log(res.data);
-    if (res.data.success) {
-      const token = res.data.token;
-      const expired = res.data.expired;
-      document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
-      router.push("/admin/products");
+  try {
+    const response = await axios.post(api, user);
+    if (response.data.success) {
+      const token = response.data.token;
+      const expired = response.data.expired;
+      document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
+      console.log(document.cookie);
     }
-  });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    router.push("/admin/products");
+  }
 };
+
+const checkSingIn = async () => {
+  const api = `${config.API_PATH}/api/user/check`;
+  try {
+    const response = await axios.post(api);
+    if (response.data.success) {
+      console.log("signIn");
+    } else {
+      console.log("unSignIn");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+checkSingIn();
 </script>
 
 <style lang="scss" scoped>
