@@ -11,19 +11,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-axios.defaults.withCredentials = true; //跨域請求是否攜帶cookie做驗證
+// axios.defaults.withCredentials = true; //跨域請求是否攜帶cookie做驗證
 
 library.add(fas, fab, far);
 const pinia = createPinia();
 const app = createApp(App);
-
-app
-  .use(VueAxios, axios)
-  .use(store)
-  .use(router)
-  .use(pinia)
-  .component("fa", FontAwesomeIcon)
-  .mount("#app");
 
 // 頁面驗證使用, 在router設定
 router.beforeEach(async (to, from, next) => {
@@ -45,3 +37,11 @@ router.beforeEach(async (to, from, next) => {
     next();
   }
 });
+
+app
+  .use(VueAxios, axios)
+  .use(store)
+  .use(router)
+  .use(pinia)
+  .component("fa", FontAwesomeIcon)
+  .mount("#app");

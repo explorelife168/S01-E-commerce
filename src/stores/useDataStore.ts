@@ -166,6 +166,24 @@ const useDataStore = defineStore({
         console.error(error);
       }
     },
+    checkSingIn() {
+      let sec = 0;
+      return async function () {
+        const api = `${config.API_PATH}/api/user/check`;
+        try {
+          const response = await axios.post(api);
+          if (response.data.success) {
+            console.log("signIn", `第${sec}秒`);
+          } else {
+            console.log("unSignIn", `第${sec}秒`);
+          }
+        } catch (error) {
+          console.log(error);
+        } finally {
+          sec += 10;
+        }
+      };
+    },
 
     async getCouponList(page = 1) {
       try {

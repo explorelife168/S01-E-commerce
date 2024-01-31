@@ -85,21 +85,6 @@ import config from "../../../../config/dev.env";
 // import currency from "@/utils/filters/currency"; // 小數點
 import type { Coupon } from "@/@types";
 
-// interface EditProducts {
-//   category: string;
-//   content: string;
-//   description: string;
-//   id: string;
-//   imageUrl: string;
-//   is_enabled: number;
-//   origin_price: number;
-//   price: number;
-//   title: string;
-//   unit: string;
-//   num: number;
-//   image: string;
-// }
-
 // const products = ref(); //產品List
 const dataStore = useDataStore();
 
@@ -107,21 +92,9 @@ const modelConfigController = ref(modelConfig); //控制模型
 
 const isLoading = ref(false);
 
-// const updateCouponList = ref();
-
-// const pagination = ref({
-//   category: null,
-//   current_page: 1,
-//   has_next: true,
-//   has_pre: false,
-//   total_pages: 0,
-// });
-
 const updateCouponList = computed(() => dataStore.updateCouponList);
 
 const pagination = computed(() => dataStore.couponPagination);
-// 產品畫面顯示
-// const updateProducts = computed(() => dataStore.products);
 
 // 建立新優惠券
 const createNewCoupon = () => {
@@ -146,21 +119,6 @@ const deleteCoupon = async (id: string) => {
     isLoading.value = false;
   }
 };
-//獲得CouponList
-// const getCouponList = async (page = 1) => {
-//   isLoading.value = true;
-//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupons?page=${page}`;
-//   try {
-//     const response = await axios.get(api);
-//     updateCouponList.value = response.data.coupons;
-//     pagination.value = response.data.pagination;
-//     console.log(response);
-//   } catch (error) {
-//     console.log(error);
-//   } finally {
-//     isLoading.value = false;
-//   }
-// };
 
 const editBtnController = (coupon: Coupon) => {
   modelConfigController.value.editCoupon = true;

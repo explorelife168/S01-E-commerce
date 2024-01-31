@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import AlertMessage from "../../../global/AlertMessage/index.vue";
 import Navbar from "../../../global/Navbar/index.vue";
 import Sidebar from "../../../global/Sidebar/index.vue";
@@ -38,9 +38,12 @@ import NewProduct from "../../../global/NewProduct/index.vue";
 import NewCoupon from "../../../global/NewCoupon/index.vue";
 import CheckProduct from "../../../global/CheckProduct/index.vue";
 import UserData from "../../../global/UserData/index.vue";
+import useDataStore from "../../../../stores/useDataStore";
 import { modelConfig } from "../modelConfig";
 
 const modelConfigController = ref(modelConfig);
+
+const dataStore = useDataStore();
 
 const updateToken = () => {
   const token = document.cookie.replace(
@@ -50,7 +53,16 @@ const updateToken = () => {
   axios.defaults.headers.common.Authorization = token;
 };
 
-updateToken(); //保存cookie以及request時候發送Token驗證用
+onMounted(() => {
+  const CheckSignIn = dataStore.checkSingIn();
+  const doubleCheckSignIn = setInterval(() => {
+    CheckSignIn();
+  }, 10000);
+  onUnmounted(() => {
+    clearInterval(doubleCheckSignIn);
+  });
+}),
+  updateToken(); //保存cookie以及request時候發送Token驗證用
 </script>
 
 <style lang="scss" scoped>
