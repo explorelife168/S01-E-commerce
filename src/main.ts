@@ -25,8 +25,7 @@ app
   .component("fa", FontAwesomeIcon)
   .mount("#app");
 
-//頁面驗證使用, 在router設定
-
+// 頁面驗證使用, 在router設定
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requireAuth) {
     const api = "https://vue-course-api.hexschool.io/api/user/check";
