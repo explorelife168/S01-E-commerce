@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
         next();
       } else {
         console.log("main.ts:尚未登入");
-        next({ path: "/login" });
+        next({ path: "/" });
       }
     } catch (error) {
       console.error("Error checking user authentication:", error);

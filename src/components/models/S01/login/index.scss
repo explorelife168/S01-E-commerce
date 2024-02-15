@@ -4,7 +4,6 @@
   align-items: center;
   width: 100%;
   height: 100vh;
-  background-color: #2b3035;
   flex-direction: column;
 
   .login-container {
@@ -16,45 +15,48 @@
 
     .logo {
       margin-top: -6%;
-      width: 65px;
+      width: 45%;
       position: relative;
-      height: 65px;
+      height: 25%;
       background-repeat: no-repeat;
-      background-size: 100% auto;
+      background-size: 45% auto;
     }
 
     .title {
       position: relative;
       display: block;
       margin: 5% 0;
+      font-family: "Libre Baskerville", serif;
       font-size: 1.5rem;
       font-weight: 400;
-      color: #dee2e6;
+      color: #495057;
     }
 
     .input {
+      width: 100%;
       margin-bottom: 5%;
       color: #dee2e6;
       position: relative;
 
       input {
         display: block;
-        width: 100%;
+        width: 98%;
         height: 45px;
-        font-size: 1rem;
+        font-size: 1.2rem;
         line-height: 1.5;
         color: #495057;
-        background-color: #212529;
+        background-color: #fff;
         background-clip: padding-box;
-        border: 1px solid #495057;
+        border: 1px solid #b3b2b2;
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         padding-block: 0;
         padding-inline: 0;
+        padding-left: 2%;
       }
 
       input:focus {
         position: relative;
-        background-color: #212529;
+        background-color: #fff;
         border-color: #86b7fe;
         outline: 0;
         z-index: 1;
@@ -99,13 +101,13 @@
         appearance: none;
         width: 1rem;
         height: 1rem;
-        background-color: #212529;
+        background-color: #fff;
         border: 1px solid #495057;
       }
 
       .form-check-label {
         margin-left: 3%;
-        color: #fff;
+        color: #495057;
       }
     }
 
@@ -118,20 +120,21 @@
         width: 100%;
         height: 43px;
         font-size: 1rem;
-        color: #dee2e6;
-        background-color: #0d6efd;
+        color: #fff;
+        background-color: #495057;
         border: none;
         border-radius: 5px;
       }
 
       button:hover {
-        background-color: #0a53be;
+        background-color: #6e757b;
+        cursor: pointer;
       }
     }
 
     .data {
       margin-top: 17%;
-      color: rgba(222, 226, 230, 0.75);
+      color: #495057;
     }
   }
 }

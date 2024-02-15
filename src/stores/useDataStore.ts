@@ -95,6 +95,7 @@ type UseDataStore = {
   total: number;
   updateCouponList: UpdateCouponList[];
   couponPagination: CouponPagination;
+  signInCheck: boolean;
 };
 
 const useDataStore = defineStore({
@@ -124,6 +125,7 @@ const useDataStore = defineStore({
       has_pre: false,
       total_pages: 1,
     },
+    signInCheck: false,
   }),
   getters: {},
   actions: {
@@ -166,23 +168,18 @@ const useDataStore = defineStore({
         console.error(error);
       }
     },
-    checkSingIn() {
-      let sec = 0;
-      return async function () {
-        const api = `${config.API_PATH}/api/user/check`;
-        try {
-          const response = await axios.post(api);
-          if (response.data.success) {
-            console.log("signIn", `第${sec}秒`);
-          } else {
-            console.log("unSignIn", `第${sec}秒`);
-          }
-        } catch (error) {
-          console.log(error);
-        } finally {
-          sec += 10;
+    async checkSingIn() {
+      const api = `${config.API_PATH}/api/user/check`;
+      try {
+        const response = await axios.post(api);
+        if (response.data.success) {
+          this.signInCheck = true;
+        } else {
+          this.signInCheck = false;
         }
-      };
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     async getCouponList(page = 1) {

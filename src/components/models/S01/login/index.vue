@@ -3,7 +3,9 @@
     <form class="login-container" @submit.prevent="signIn">
       <div
         class="logo"
-        :style="{ 'background-image': `url(${require('@/assets/logo.png')})` }"
+        :style="{
+          'background-image': `url(${require('@/assets/image/Vissla_Logo.png')})`,
+        }"
       ></div>
       <div class="title" v-html="'Please sign in'"></div>
 
@@ -65,6 +67,7 @@ const signIn = async () => {
       const token = response.data.token;
       const expired = response.data.expired;
       document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
+      console.log(document.cookie);
     }
   } catch (error) {
     console.log(error);

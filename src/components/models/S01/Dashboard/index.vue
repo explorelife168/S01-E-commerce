@@ -1,14 +1,18 @@
 <template>
   <div class="dashboard-wrap">
     <Navbar />
-    <div class="flex">
-      <div class="left">
+    <HomePage />
+    <!-- <div class="flex"> -->
+    <!-- <div class="left">
         <Sidebar />
-      </div>
-      <div class="right">
-        <router-view></router-view>
-      </div>
-    </div>
+      </div> -->
+    <!-- <div class="right"> -->
+    <!-- <transition name="fade"> -->
+    <router-view />
+    <!-- </transition> -->
+
+    <!-- </div> -->
+    <!-- </div> -->
     <div
       class="new-product-cards"
       v-if="modelConfigController.createNewProduct"
@@ -30,39 +34,30 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref } from "vue";
 import AlertMessage from "../../../global/AlertMessage/index.vue";
 import Navbar from "../../../global/Navbar/index.vue";
-import Sidebar from "../../../global/Sidebar/index.vue";
+import HomePage from "../../../global/HomePage/index.vue";
+// import Sidebar from "../../../global/Sidebar/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
 import NewCoupon from "../../../global/NewCoupon/index.vue";
 import CheckProduct from "../../../global/CheckProduct/index.vue";
 import UserData from "../../../global/UserData/index.vue";
-import useDataStore from "../../../../stores/useDataStore";
+
 import { modelConfig } from "../modelConfig";
 
 const modelConfigController = ref(modelConfig);
-
-const dataStore = useDataStore();
 
 const updateToken = () => {
   const token = document.cookie.replace(
     /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
     "$1"
   );
+  console.log(token);
   axios.defaults.headers.common.Authorization = token;
 };
 
-onMounted(() => {
-  const CheckSignIn = dataStore.checkSingIn();
-  const doubleCheckSignIn = setInterval(() => {
-    CheckSignIn();
-  }, 10000);
-  onUnmounted(() => {
-    clearInterval(doubleCheckSignIn);
-  });
-}),
-  updateToken(); //保存cookie以及request時候發送Token驗證用
+updateToken(); //保存cookie以及request時候發送Token驗證用
 </script>
 
 <style lang="scss" scoped>
