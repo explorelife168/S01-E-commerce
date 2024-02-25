@@ -6,11 +6,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "login",
     component: () => import("../components/models/S01/login/index.vue"),
   },
-  // {
-  //   path: "/test01",
-  //   name: "test01",
-  //   component: () => import("../components/models/S01/test01/index.vue"),
-  // },
+  {
+    path: "/homepage",
+    name: "HomePage",
+    component: () => import("../components/models/S01/HomePage/index.vue"),
+  },
   {
     path: "/",
     name: "Dashboard",

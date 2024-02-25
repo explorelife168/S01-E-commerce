@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard-wrap">
     <Navbar />
-    <HomePage />
     <!-- <div class="flex"> -->
     <!-- <div class="left">
         <Sidebar />
@@ -37,7 +36,6 @@ import axios from "axios";
 import { ref } from "vue";
 import AlertMessage from "../../../global/AlertMessage/index.vue";
 import Navbar from "../../../global/Navbar/index.vue";
-import HomePage from "../../../global/HomePage/index.vue";
 // import Sidebar from "../../../global/Sidebar/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
 import NewCoupon from "../../../global/NewCoupon/index.vue";
