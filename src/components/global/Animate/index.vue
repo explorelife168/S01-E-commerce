@@ -9,16 +9,13 @@
           'background-image': `url(${require(`@/assets/image/${image}`)})`,
         }"
         :ref="`image-${index + 1}`"
-        @click="toShop"
       ></div>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
-// import { ref } from "vue";
-// import router from "@/router";
 import { gsap } from "gsap";
 
 const images = ref([
@@ -27,45 +24,35 @@ const images = ref([
   "HOME-PAGE-MAIN-NEW-SEAS.png",
 ]);
 
-const currentIndex = ref(2);
+const currentIndex = ref(0);
+const imageRun = ref();
 
 const imageMovie = () => {
-  const imageRun = document.querySelector(`.image-${currentIndex.value + 1}`);
-  if (!imageRun) return;
-  // console.log(imageRun);
-  gsap.to(imageRun, {
-    x: 0,
+  let tl = gsap.timeline();
+
+  tl.to(imageRun.value, {
     opacity: 1,
     duration: 1,
-    ease: "power2.inOut",
     onComplete: () => {
-      console.log("complete-1");
-      gsap.to(imageRun, {
+      tl.to(imageRun.value, {
         opacity: 0,
-        duration: 0.5,
-        delay: 3,
+        duration: 1,
         onComplete: () => {
-          console.log("complete-2");
-          startImageMovie();
+          currentIndex.value = (currentIndex.value + 1) % images.value.length;
+          imageRun.value = document.querySelector(
+            `.image-${currentIndex.value + 1}`
+          );
+          imageMovie();
         },
       });
     },
   });
-};
-
-const startImageMovie = () => {
-  currentIndex.value = (currentIndex.value + 1) % images.value.length;
-
-  console.log("currentIndex.value:", currentIndex.value);
-  imageMovie();
-};
-
-const toShop = () => {
-  startImageMovie();
+  tl.play();
 };
 
 onMounted(() => {
-  startImageMovie();
+  imageRun.value = document.querySelector(`.image-${currentIndex.value + 1}`);
+  imageMovie();
 });
 </script>
 
