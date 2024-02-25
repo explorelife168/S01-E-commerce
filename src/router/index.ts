@@ -2,6 +2,10 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: "/",
+    redirect: "/homepage", // 將首頁重定向到 /homepage
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("../components/models/S01/login/index.vue"),
