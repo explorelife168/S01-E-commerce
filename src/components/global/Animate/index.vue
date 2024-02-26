@@ -8,7 +8,7 @@
         :style="{
           'background-image': `url(${require(`@/assets/image/${image}`)})`,
         }"
-        :ref="`image-${index + 1}`"
+        @click="toShop"
       ></div>
     </div>
   </div>
@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { gsap } from "gsap";
+import router from "@/router";
 
 const images = ref([
   "HOME-PAGE-BANNER-ECO_ZY.png",
@@ -34,9 +35,11 @@ const imageMovie = () => {
     opacity: 1,
     duration: 1,
     onComplete: () => {
+      console.log("onComplete-1");
       tl.to(imageRun.value, {
         opacity: 0,
         duration: 1,
+        delay: 3,
         onComplete: () => {
           currentIndex.value = (currentIndex.value + 1) % images.value.length;
           imageRun.value = document.querySelector(
@@ -49,7 +52,9 @@ const imageMovie = () => {
   });
   tl.play();
 };
-
+const toShop = () => {
+  router.push("/customer_order");
+};
 onMounted(() => {
   imageRun.value = document.querySelector(`.image-${currentIndex.value + 1}`);
   imageMovie();

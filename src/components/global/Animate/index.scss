@@ -23,9 +23,14 @@
       background-position: center;
       background-repeat: no-repeat;
       z-index: 1;
+      opacity: 0;
       &:hover {
         cursor: pointer;
       }
     }
+    // .image-2,
+    // .image-3 {
+    //   opacity: 0;
+    // }
   }
 }
