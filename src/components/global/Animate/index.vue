@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { gsap } from "gsap";
 import router from "@/router";
 
@@ -27,15 +27,19 @@ const images = ref([
 
 const currentIndex = ref(0);
 const imageRun = ref();
+const imageMovieController = ref(false);
 
 const imageMovie = () => {
   let tl = gsap.timeline();
+
+  if (imageMovieController.value) {
+    return;
+  }
 
   tl.to(imageRun.value, {
     opacity: 1,
     duration: 1,
     onComplete: () => {
-      console.log("onComplete-1");
       tl.to(imageRun.value, {
         opacity: 0,
         duration: 1,
@@ -56,8 +60,13 @@ const toShop = () => {
   router.push("/customer_order");
 };
 onMounted(() => {
+  imageMovieController.value = false;
   imageRun.value = document.querySelector(`.image-${currentIndex.value + 1}`);
   imageMovie();
+});
+
+onBeforeUnmount(() => {
+  imageMovieController.value = true;
 });
 </script>
 
