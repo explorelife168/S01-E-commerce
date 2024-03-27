@@ -62,13 +62,10 @@
 
 <script lang="ts" setup>
 import axios from "axios";
-// import router from "@/router";
 import { useRoute } from "vue-router";
 import { ref } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
-// import { modelConfig } from "../../models/S01/modelConfig";
-// import useDataStore from "../../../stores/useDataStore";
 import currency from "../../../utils/filters/currency";
 import config from "../../../../config/dev.env";
 
@@ -140,7 +137,6 @@ const payOrderMoney = async () => {
     console.log(error);
   } finally {
     isLoading.value = false;
-    // router.push("/customer_order");
   }
 };
 

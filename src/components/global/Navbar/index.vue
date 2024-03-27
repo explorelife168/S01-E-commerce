@@ -36,23 +36,7 @@
           </ul>
         </div>
       </div>
-
-      <!-- <div class="right-icon">
-        <font-awesome-icon
-          icon="fa-solid fa-right-to-bracket"
-          class="sign-in"
-          @click.prevent="signIn"
-          v-if="!dataStore.signInCheck"
-        />
-        <font-awesome-icon
-          icon="fa-solid fa-right-from-bracket"
-          @click.prevent="signOut"
-          class="sign-out"
-          v-if="dataStore.signInCheck"
-        />
-      </div> -->
     </div>
-    <!-- <div class="block"></div> -->
   </div>
 </template>
 
@@ -67,14 +51,13 @@ import config from "../../../../config/dev.env";
 
 const dataStore = useDataStore();
 
-const showDropdown = ref(false); // 控制下拉菜单的显示状态
+const showDropdown = ref(false);
 
 const dropdownMenu = ref();
 
 const toggleDropdown = () => {
-  showDropdown.value = !showDropdown.value; // 切换显示状态
+  showDropdown.value = !showDropdown.value;
 
-  // 如果显示下拉菜单，则执行展开动画，否则执行收起动画
   if (showDropdown.value) {
     gsap.to(dropdownMenu.value, { opacity: 1, duration: 1 });
   } else {

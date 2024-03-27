@@ -2,15 +2,7 @@
   <router-view />
 </template>
 
-<script setup lang="ts">
-// import axios from "axios";
-import { onMounted } from "vue";
-
-onMounted(() => {
-  // const api = "https://vue-course-api.hexschool.io/api/neilwu/products";
-  // axios.get(api).then((response) => console.log(response.data));
-});
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss">
 * {

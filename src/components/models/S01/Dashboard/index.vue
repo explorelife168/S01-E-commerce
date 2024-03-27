@@ -1,17 +1,7 @@
 <template>
   <div class="dashboard-wrap">
     <Navbar />
-    <!-- <div class="flex"> -->
-    <!-- <div class="left">
-        <Sidebar />
-      </div> -->
-    <!-- <div class="right"> -->
-    <!-- <transition name="fade"> -->
     <router-view />
-    <!-- </transition> -->
-
-    <!-- </div> -->
-    <!-- </div> -->
     <div
       class="new-product-cards"
       v-if="modelConfigController.createNewProduct"
@@ -36,7 +26,6 @@ import axios from "axios";
 import { ref } from "vue";
 import AlertMessage from "../../../global/AlertMessage/index.vue";
 import Navbar from "../../../global/Navbar/index.vue";
-// import Sidebar from "../../../global/Sidebar/index.vue";
 import NewProduct from "../../../global/NewProduct/index.vue";
 import NewCoupon from "../../../global/NewCoupon/index.vue";
 import CheckProduct from "../../../global/CheckProduct/index.vue";

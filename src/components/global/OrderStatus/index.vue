@@ -73,35 +73,13 @@ import axios from "axios";
 import { ref } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
-// import useDataStore from "../../../stores/useDataStore";
-// import modelConfig from "@/components/models/S01/modelConfig";
 import config from "../../../../config/dev.env";
 import currency from "@/utils/filters/currency"; // 小數點
-
-// interface EditProducts {
-//   category: string;
-//   content: string;
-//   description: string;
-//   id: string;
-//   imageUrl: string;
-//   is_enabled: number;
-//   origin_price: number;
-//   price: number;
-//   title: string;
-//   unit: string;
-//   num: number;
-//   image: string;
-// }
-
-// const products = ref(); //產品List
-// const modelConfigController = ref(modelConfig); //控制模型
 
 const isLoading = ref(false);
 
 const orderListStatusData = ref();
 
-// 產品畫面顯示
-// const updateProducts = computed(() => dataStore.products);
 const pagination = ref({
   category: "",
   current_page: 1,
@@ -109,30 +87,6 @@ const pagination = ref({
   has_pre: false,
   total_pages: 1,
 });
-
-// // // 開啟建立新產品及編輯產品開關
-// const createNewProduct = () => {
-//   return (
-//     (modelConfigController.value.editProducts = false),
-//     (modelConfigController.value.createNewProduct = true)
-//   );
-// };
-
-// 刪除產品
-// const deleteProducts = (id: string) => {
-//   isLoading.value = true;
-//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/product/${id}`;
-//   axios
-//     .delete(api, { data: id })
-//     .then((response) => {
-//       if (response.data.success) console.log("刪除商品成功");
-//       dataStore.getProducts();
-//       isLoading.value = false;
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// };
 
 const dateTransfer = (t: number): string => {
   return new Date(t * 1000).toISOString().replace("T", " ").substring(0, 19);
@@ -152,13 +106,6 @@ const getOrderListStatus = async (page = 1) => {
     isLoading.value = false;
   }
 };
-
-// const editProducts = (obj: EditProducts) => {
-//   modelConfigController.value.createNewProduct = true;
-//   modelConfigController.value.editProducts = true;
-//   modelConfigController.value.productsId = obj.id;
-// };
-
 getOrderListStatus();
 </script>
 

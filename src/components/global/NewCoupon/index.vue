@@ -131,10 +131,6 @@ const modelConfigController = ref(modelConfig); //控制模型
 
 const dataStore = useDataStore();
 
-// const modelConfigController = ref(modelConfig);
-
-// const buttonDisabled = ref(false); // 新增產品按鈕防呆
-
 const isLoading = ref(false);
 
 const editCouponData = computed(() => {

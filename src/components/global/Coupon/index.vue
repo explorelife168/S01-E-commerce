@@ -82,10 +82,9 @@ import "vue-loading-overlay/dist/css/index.css";
 import useDataStore from "../../../stores/useDataStore";
 import modelConfig from "@/components/models/S01/modelConfig";
 import config from "../../../../config/dev.env";
-// import currency from "@/utils/filters/currency"; // 小數點
+
 import type { Coupon } from "@/@types";
 
-// const products = ref(); //產品List
 const dataStore = useDataStore();
 
 const modelConfigController = ref(modelConfig); //控制模型

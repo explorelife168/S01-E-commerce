@@ -59,7 +59,6 @@ import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import { modelConfig } from "../../models/S01/modelConfig";
 import useDataStore from "../../../stores/useDataStore";
-// import currency from "../../../utils/filters/currency";
 import config from "../../../../config/dev.env";
 
 interface DataInfo {
@@ -81,8 +80,6 @@ const dataInfo = ref<DataInfo>({
   address: "Taipei",
   message: "Test only",
 });
-
-// const selectQuantity = ref(1);
 
 const isLoading = ref(false);
 

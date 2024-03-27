@@ -174,14 +174,6 @@ const cartsIcon = ref(null);
 
 const couponCode = ref("");
 
-// const pagination = ref({
-//   category: "",
-//   current_page: 1,
-//   has_next: true,
-//   has_pre: false,
-//   total_pages: 1,
-// });
-
 const updateProducts = computed(() => dataStore.products);
 const updateItem = computed(() => dataStore.cartsItem);
 const pagination = computed(() => dataStore.pagination);
