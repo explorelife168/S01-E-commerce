@@ -61,13 +61,14 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
+// import axios from "axios";
 import { useRoute } from "vue-router";
 import { ref } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import currency from "../../../utils/filters/currency";
 import config from "../../../../config/dev.env";
+import errInterceptors from "@/errInterceptors";
 
 interface GetList {
   category: string;
@@ -113,32 +114,53 @@ const colorStatus = ref(false);
 const getOrderList = async () => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/order/${route.params.orderId}`;
-  try {
-    const response = await axios.get(api);
-    orderList.value = response.data.order.products as UpdateGetList;
-    total.value = response.data.order.total;
-    userData.value = response.data.order.user;
-    colorStatus.value = response.data.order.is_paid;
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    isLoading.value = false;
-  }
+  const response = await errInterceptors.get(api);
+  orderList.value = response.data.order.products as UpdateGetList;
+  total.value = response.data.order.total;
+  userData.value = response.data.order.user;
+  colorStatus.value = response.data.order.is_paid;
+  console.log(response);
+  isLoading.value = false;
 };
+// const getOrderList = async () => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/order/${route.params.orderId}`;
+//   try {
+//     const response = await axios.get(api);
+//     orderList.value = response.data.order.products as UpdateGetList;
+//     total.value = response.data.order.total;
+//     userData.value = response.data.order.user;
+//     colorStatus.value = response.data.order.is_paid;
+//     console.log(response);
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     isLoading.value = false;
+//   }
+// };
+
 const payOrderMoney = async () => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/pay/${route.params.orderId}`;
-  try {
-    const response = await axios.post(api);
-    console.log(response);
-    getOrderList();
-  } catch (error) {
-    console.log(error);
-  } finally {
-    isLoading.value = false;
-  }
+  const response = await errInterceptors.post(api);
+  console.log(response);
+  getOrderList();
+  isLoading.value = false;
 };
+
+// const payOrderMoney = async () => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/pay/${route.params.orderId}`;
+//   try {
+//     const response = await axios.post(api);
+//     console.log(response);
+//     getOrderList();
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     isLoading.value = false;
+//   }
+// };
 
 getOrderList();
 </script>

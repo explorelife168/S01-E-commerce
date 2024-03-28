@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
+// import axios from "axios";
 import { ref, computed } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
@@ -49,6 +49,7 @@ import { modelConfig } from "../../models/S01/modelConfig";
 import useDataStore from "../../../stores/useDataStore";
 import currency from "../../../utils/filters/currency";
 import config from "../../../../config/dev.env";
+import errInterceptors from "@/errInterceptors";
 
 const dataStore = useDataStore();
 
@@ -71,17 +72,28 @@ const checkProductSwitch = () => {
 const addCart = (id: string, qty: number) => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
-  axios
-    .post(api, { data: { product_id: id, qty: qty } })
-    .then((response) => {
-      console.log(response);
-      modelConfigController.value.checkProductSwitch = false;
-      dataStore.getCartsItem();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  const response = errInterceptors.post(api, {
+    data: { product_id: id, qty: qty },
+  });
+  console.log(response);
+  modelConfigController.value.checkProductSwitch = false;
+  dataStore.getCartsItem();
 };
+
+// const addCart = (id: string, qty: number) => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
+//   axios
+//     .post(api, { data: { product_id: id, qty: qty } })
+//     .then((response) => {
+//       console.log(response);
+//       modelConfigController.value.checkProductSwitch = false;
+//       dataStore.getCartsItem();
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// };
 </script>
 
 <style lang="scss" scoped>

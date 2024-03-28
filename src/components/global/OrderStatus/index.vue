@@ -69,12 +69,13 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
+// import axios from "axios";
 import { ref } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import config from "../../../../config/dev.env";
 import currency from "@/utils/filters/currency"; // 小數點
+import errInterceptors from "@/errInterceptors";
 
 const isLoading = ref(false);
 
@@ -95,17 +96,27 @@ const dateTransfer = (t: number): string => {
 const getOrderListStatus = async (page = 1) => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/orders?page=${page}`;
-  try {
-    const response = await axios.get(api);
-    console.log(response);
-    orderListStatusData.value = response.data.orders;
-    pagination.value = response.data.pagination;
-  } catch (error) {
-    console.log(error);
-  } finally {
-    isLoading.value = false;
-  }
+  const response = await errInterceptors.get(api);
+  console.log(response);
+  orderListStatusData.value = response.data.orders;
+  pagination.value = response.data.pagination;
+  isLoading.value = false;
 };
+
+// const getOrderListStatus = async (page = 1) => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/orders?page=${page}`;
+//   try {
+//     const response = await axios.get(api);
+//     console.log(response);
+//     orderListStatusData.value = response.data.orders;
+//     pagination.value = response.data.pagination;
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     isLoading.value = false;
+//   }
+// };
 getOrderListStatus();
 </script>
 

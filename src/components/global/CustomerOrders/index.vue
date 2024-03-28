@@ -149,7 +149,7 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
+// import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { gsap } from "gsap";
 import { ref, computed } from "vue";
@@ -159,6 +159,7 @@ import useDataStore from "../../../stores/useDataStore";
 import modelConfig from "@/components/models/S01/modelConfig";
 import config from "../../../../config/dev.env";
 import currency from "../../../utils/filters/currency"; // 小數點
+import errInterceptors from "@/errInterceptors";
 
 const dataStore = useDataStore();
 
@@ -180,15 +181,22 @@ const pagination = computed(() => dataStore.pagination);
 
 const clickProduct = async (id: string) => {
   isLoading.value = true;
-  try {
-    await dataStore.getProduct(id);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    modelConfigController.value.checkProductSwitch = true;
-    isLoading.value = false;
-  }
+  await dataStore.getProduct(id);
+  modelConfigController.value.checkProductSwitch = true;
+  isLoading.value = false;
 };
+
+// const clickProduct = async (id: string) => {
+//   isLoading.value = true;
+//   try {
+//     await dataStore.getProduct(id);
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     modelConfigController.value.checkProductSwitch = true;
+//     isLoading.value = false;
+//   }
+// };
 
 const cartsOpenModelController = () => {
   cartsModel.value = true;
@@ -219,52 +227,82 @@ const cartsCloseModelController = () => {
   });
 };
 
-const addCart = (id: string, qty: number) => {
+const addCart = async (id: string, qty: number) => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
-  axios
-    .post(api, { data: { product_id: id, qty: qty } })
-    .then((response) => {
-      console.log(response);
-      isLoading.value = false;
-      dataStore.getCartsItem();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  const response = await errInterceptors.post(api, {
+    data: { product_id: id, qty: qty },
+  });
+  console.log(response);
+  isLoading.value = false;
+  dataStore.getCartsItem();
 };
 
-const deleteCart = (id: string) => {
+// const addCart = (id: string, qty: number) => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
+//   axios
+//     .post(api, { data: { product_id: id, qty: qty } })
+//     .then((response) => {
+//       console.log(response);
+//       isLoading.value = false;
+//       dataStore.getCartsItem();
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// };
+
+const deleteCart = async (id: string) => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart/${id}`;
-  axios
-    .delete(api)
-    .then((response) => {
-      console.log(response);
-      dataStore.getCartsItem();
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-    .finally(() => {
-      isLoading.value = false;
-    });
+  const response = await errInterceptors.delete(api);
+  console.log(response);
+  dataStore.getCartsItem();
+  isLoading.value = false;
 };
 
-const addCouponCode = () => {
+// const deleteCart = (id: string) => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart/${id}`;
+//   axios
+//     .delete(api)
+//     .then((response) => {
+//       console.log(response);
+//       dataStore.getCartsItem();
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     })
+//     .finally(() => {
+//       isLoading.value = false;
+//     });
+// };
+
+const addCouponCode = async () => {
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/coupon`;
-  axios
-    .post(api, { data: { code: couponCode.value } })
-    .then((response) => {
-      console.log(response);
-      console.log(couponCode.value);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  const response = await errInterceptors.post(api, {
+    data: { code: couponCode.value },
+  });
+  console.log(response);
+  console.log(couponCode.value);
 };
+
+// const addCouponCode = () => {
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/coupon`;
+//   axios
+//     .post(api, { data: { code: couponCode.value } })
+//     .then((response) => {
+//       console.log(response);
+//       console.log(couponCode.value);
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// };
 
 // 客戶資料填寫頁面
+
 const addUserData = () => {
   if (dataStore.cartsItem.length === 0) return;
   modelConfigController.value.userDataSwitch = true;

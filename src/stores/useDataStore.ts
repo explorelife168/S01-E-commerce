@@ -1,6 +1,7 @@
-import axios from "axios";
+// import axios from "axios";
 import { defineStore } from "pinia";
 import config from "../../config/dev.env";
+import errInterceptors from "@/errInterceptors";
 
 //回傳的值(product list)設定型別
 interface UpdateProductsList {
@@ -130,68 +131,63 @@ const useDataStore = defineStore({
   getters: {},
   actions: {
     // 產品畫面更新
+    // async getProducts(page = 1) {
+    //   try {
+    //     this.isLoading = true;
+    //     const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/products?page=${page}`;
+    //     const response = await axios.get(api);
+    //     this.products = response.data.products;
+    //     this.pagination = response.data.pagination;
+    //     console.log("response:", response);
+    //     this.isLoading = false;
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // },
+
     async getProducts(page = 1) {
-      try {
-        this.isLoading = true;
-        const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/products?page=${page}`;
-        const response = await axios.get(api);
-        this.products = response.data.products;
-        this.pagination = response.data.pagination;
-        console.log(response);
-        this.isLoading = false;
-      } catch (error) {
-        console.error(error);
-      }
+      this.isLoading = true;
+      const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/products?page=${page}`;
+      const response = await errInterceptors.get(api);
+      this.products = response.data.products;
+      this.pagination = response.data.pagination;
+      console.log("response:", response);
+      this.isLoading = false;
     },
 
     async getProduct(id: string) {
-      try {
-        const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/product/${id}`;
-        const response = await axios.get(api);
-        this.product = response.data.product;
-        console.log(response);
-      } catch (error) {
-        console.error(error);
-      }
+      const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/product/${id}`;
+      const response = await errInterceptors.get(api);
+      this.product = response.data.product;
+      console.log(response);
     },
 
     async getCartsItem() {
-      try {
-        const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
-        const response = await axios.get(api);
-        this.cartsItem = response.data.data.carts;
-        this.total = response.data.data.total;
-        this.final_total = response.data.data.final_total;
-        console.log(response);
-        console.log(this.cartsItem);
-      } catch (error) {
-        console.error(error);
-      }
+      const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
+      const response = await errInterceptors.get(api);
+      this.cartsItem = response.data.data.carts;
+      this.total = response.data.data.total;
+      this.final_total = response.data.data.final_total;
+      console.log(response);
+      console.log(this.cartsItem);
     },
+
     async checkSingIn() {
       const api = `${config.API_PATH}/api/user/check`;
-      try {
-        const response = await axios.post(api);
-        if (response.data.success) {
-          this.signInCheck = true;
-        } else {
-          this.signInCheck = false;
-        }
-      } catch (error) {
-        console.log(error);
+      const response = await errInterceptors.post(api);
+      if (response.data.success) {
+        this.signInCheck = true;
+      } else {
+        this.signInCheck = false;
       }
     },
 
     async getCouponList(page = 1) {
-      try {
-        const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupons?page=${page}`;
-        const response = await axios.get(api);
-        this.updateCouponList = response.data.coupons;
-        this.couponPagination = response.data.pagination;
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
+      const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupons?page=${page}`;
+      const response = await errInterceptors.get(api);
+      this.updateCouponList = response.data.coupons;
+      this.couponPagination = response.data.pagination;
+      console.log(response);
     },
 
     errorMessage(msg: string) {
@@ -208,6 +204,86 @@ const useDataStore = defineStore({
       }, 5000);
     },
   },
+  // actions: {
+  //   // 產品畫面更新
+  //   async getProducts(page = 1) {
+  //     try {
+  //       this.isLoading = true;
+  //       const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/products?page=${page}`;
+  //       const response = await axios.get(api);
+  //       this.products = response.data.products;
+  //       this.pagination = response.data.pagination;
+  //       console.log(response);
+  //       this.isLoading = false;
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   },
+
+  //   async getProduct(id: string) {
+  //     try {
+  //       const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/product/${id}`;
+  //       const response = await axios.get(api);
+  //       this.product = response.data.product;
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   },
+
+  //   async getCartsItem() {
+  //     try {
+  //       const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/cart`;
+  //       const response = await axios.get(api);
+  //       this.cartsItem = response.data.data.carts;
+  //       this.total = response.data.data.total;
+  //       this.final_total = response.data.data.final_total;
+  //       console.log(response);
+  //       console.log(this.cartsItem);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   },
+  //   async checkSingIn() {
+  //     const api = `${config.API_PATH}/api/user/check`;
+  //     try {
+  //       const response = await axios.post(api);
+  //       if (response.data.success) {
+  //         this.signInCheck = true;
+  //       } else {
+  //         this.signInCheck = false;
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   },
+
+  //   async getCouponList(page = 1) {
+  //     try {
+  //       const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupons?page=${page}`;
+  //       const response = await axios.get(api);
+  //       this.updateCouponList = response.data.coupons;
+  //       this.couponPagination = response.data.pagination;
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   },
+
+  //   errorMessage(msg: string) {
+  //     if (this.stopMessageSwitch) return;
+  //     this.message = msg;
+  //     this.alertSwitch = true;
+  //     this.autoCloseMessage();
+  //   },
+
+  //   autoCloseMessage() {
+  //     setTimeout(() => {
+  //       this.message = "";
+  //       this.alertSwitch = false;
+  //     }, 5000);
+  //   },
+  // },
 });
 
 export default useDataStore;

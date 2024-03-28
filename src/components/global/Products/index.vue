@@ -73,7 +73,7 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
+// import axios from "axios";
 import { ref, computed } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
@@ -81,6 +81,7 @@ import useDataStore from "../../../stores/useDataStore";
 import modelConfig from "@/components/models/S01/modelConfig";
 import config from "../../../../config/dev.env";
 import currency from "@/utils/filters/currency";
+import errInterceptors from "@/errInterceptors";
 
 interface EditProducts {
   category: string;
@@ -117,20 +118,30 @@ const createNewProduct = () => {
 };
 
 // 刪除產品
-const deleteProducts = (id: string) => {
+
+const deleteProducts = async (id: string) => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/product/${id}`;
-  axios
-    .delete(api, { data: id })
-    .then((response) => {
-      if (response.data.success) console.log("刪除商品成功");
-      dataStore.getProducts();
-      isLoading.value = false;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  const response = await errInterceptors.delete(api, { data: id });
+  if (response.data.success) console.log("刪除商品成功");
+  dataStore.getProducts();
+  isLoading.value = false;
 };
+
+// const deleteProducts = (id: string) => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/product/${id}`;
+//   axios
+//     .delete(api, { data: id })
+//     .then((response) => {
+//       if (response.data.success) console.log("刪除商品成功");
+//       dataStore.getProducts();
+//       isLoading.value = false;
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// };
 
 const editProducts = (obj: EditProducts) => {
   modelConfigController.value.createNewProduct = true;

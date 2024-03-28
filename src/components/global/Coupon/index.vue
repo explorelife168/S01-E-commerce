@@ -75,13 +75,14 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
+// import axios from "axios";
 import { ref, computed } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import useDataStore from "../../../stores/useDataStore";
 import modelConfig from "@/components/models/S01/modelConfig";
 import config from "../../../../config/dev.env";
+import errInterceptors from "@/errInterceptors";
 
 import type { Coupon } from "@/@types";
 
@@ -106,18 +107,27 @@ const createNewCoupon = () => {
 const deleteCoupon = async (id: string) => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupon/${id}`;
-  try {
-    const response = await axios.delete(api);
-    console.log(response);
-    console.log("刪除成功");
-  } catch (error) {
-    console.log(error);
-    console.log("刪除失敗");
-  } finally {
-    dataStore.getCouponList();
-    isLoading.value = false;
-  }
+  const response = await errInterceptors.delete(api);
+  console.log(response);
+  console.log("刪除成功");
+  dataStore.getCouponList();
+  isLoading.value = false;
 };
+// const deleteCoupon = async (id: string) => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupon/${id}`;
+//   try {
+//     const response = await axios.delete(api);
+//     console.log(response);
+//     console.log("刪除成功");
+//   } catch (error) {
+//     console.log(error);
+//     console.log("刪除失敗");
+//   } finally {
+//     dataStore.getCouponList();
+//     isLoading.value = false;
+//   }
+// };
 
 const editBtnController = (coupon: Coupon) => {
   modelConfigController.value.editCoupon = true;

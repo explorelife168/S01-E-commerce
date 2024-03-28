@@ -37,10 +37,10 @@
 </template>
 
 <script setup lang="ts">
-import axios from "axios";
 import { ref, onMounted, reactive } from "vue";
 import router from "@/router";
 import config from "../../../../../config/dev.env";
+import errInterceptors from "@/errInterceptors";
 
 const currentYears = ref(0);
 
@@ -61,18 +61,14 @@ const getYears = () => {
 
 const signIn = async () => {
   const api = `${config.API_PATH}/admin/signin`;
-  try {
-    const response = await axios.post(api, user);
-    if (response.data.success) {
-      const token = response.data.token;
-      const expired = response.data.expired;
-      document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
-      console.log(document.cookie);
-    }
-  } catch (error) {
-    console.log(error);
-  } finally {
+  const response = await errInterceptors.post(api, user);
+  if (response.data.success) {
+    const token = response.data.token;
+    const expired = response.data.expired;
+    document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
     router.push("/");
+  } else {
+    console.log(response.data);
   }
 };
 </script>

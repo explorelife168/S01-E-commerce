@@ -99,13 +99,14 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
+// import axios from "axios";
 import { ref, computed } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import { modelConfig } from "../../models/S01/modelConfig";
 import useDataStore from "@/stores/useDataStore";
 import config from "../../../../config/dev.env";
+import errInterceptors from "@/errInterceptors";
 
 interface CreateNewCoupon {
   title: string;
@@ -146,49 +147,87 @@ createNewCouponDate.value = { ...editCouponData.value };
 const createNewCoupon = async () => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupon`;
-  try {
-    const response = await axios.post(api, {
-      data: {
-        title: createNewCouponDate.value.title,
-        is_enabled: createNewCouponDate.value.is_enabled,
-        percent: createNewCouponDate.value.percent,
-        due_date: dateTransfer(createNewCouponDate.value.due_date as string),
-        code: createNewCouponDate.value.code,
-      },
-    });
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    dataStore.getCouponList();
-    modelConfigController.value.createNewCoupon = false;
-    isLoading.value = false;
-  }
+
+  const response = await errInterceptors.post(api, {
+    data: {
+      title: createNewCouponDate.value.title,
+      is_enabled: createNewCouponDate.value.is_enabled,
+      percent: createNewCouponDate.value.percent,
+      due_date: dateTransfer(createNewCouponDate.value.due_date as string),
+      code: createNewCouponDate.value.code,
+    },
+  });
+  console.log(response);
+  dataStore.getCouponList();
+  modelConfigController.value.createNewCoupon = false;
+  isLoading.value = false;
 };
+
+// const createNewCoupon = async () => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupon`;
+//   try {
+//     const response = await axios.post(api, {
+//       data: {
+//         title: createNewCouponDate.value.title,
+//         is_enabled: createNewCouponDate.value.is_enabled,
+//         percent: createNewCouponDate.value.percent,
+//         due_date: dateTransfer(createNewCouponDate.value.due_date as string),
+//         code: createNewCouponDate.value.code,
+//       },
+//     });
+//     console.log(response);
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     dataStore.getCouponList();
+//     modelConfigController.value.createNewCoupon = false;
+//     isLoading.value = false;
+//   }
+// };
 
 const editCoupon = async () => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupon/${createNewCouponDate.value.id}`;
-  try {
-    const response = await axios.put(api, {
-      data: {
-        title: createNewCouponDate.value.title,
-        is_enabled: createNewCouponDate.value.is_enabled,
-        percent: createNewCouponDate.value.percent,
-        due_date: dateTransfer(createNewCouponDate.value.due_date as string),
-        code: createNewCouponDate.value.code,
-      },
-    });
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    dataStore.getCouponList();
-    modelConfigController.value.createNewCoupon = false;
-    modelConfigController.value.editCoupon = false;
-    isLoading.value = false;
-  }
+  const response = await errInterceptors.put(api, {
+    data: {
+      title: createNewCouponDate.value.title,
+      is_enabled: createNewCouponDate.value.is_enabled,
+      percent: createNewCouponDate.value.percent,
+      due_date: dateTransfer(createNewCouponDate.value.due_date as string),
+      code: createNewCouponDate.value.code,
+    },
+  });
+  console.log(response);
+  dataStore.getCouponList();
+  modelConfigController.value.createNewCoupon = false;
+  modelConfigController.value.editCoupon = false;
+  isLoading.value = false;
 };
+
+// const editCoupon = async () => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupon/${createNewCouponDate.value.id}`;
+//   try {
+//     const response = await axios.put(api, {
+//       data: {
+//         title: createNewCouponDate.value.title,
+//         is_enabled: createNewCouponDate.value.is_enabled,
+//         percent: createNewCouponDate.value.percent,
+//         due_date: dateTransfer(createNewCouponDate.value.due_date as string),
+//         code: createNewCouponDate.value.code,
+//       },
+//     });
+//     console.log(response);
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     dataStore.getCouponList();
+//     modelConfigController.value.createNewCoupon = false;
+//     modelConfigController.value.editCoupon = false;
+//     isLoading.value = false;
+//   }
+// };
 
 const dateTransfer = (d: string): number => {
   const unixDate = Math.floor(new Date(d).getTime() / 1000);

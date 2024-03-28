@@ -10,6 +10,7 @@ import VueAxios from "vue-axios";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import errInterceptors from "./errInterceptors";
 
 // axios.defaults.withCredentials = true; //跨域請求是否攜帶cookie做驗證
 
@@ -21,22 +22,37 @@ const app = createApp(App);
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requireAuth) {
     const api = "https://vue-course-api.hexschool.io/api/user/check";
-    try {
-      const res = await axios.post(api);
-      if (res.data.success) {
-        console.log("main.ts:已登入", res.data);
-        next();
-      } else {
-        console.log("main.ts:尚未登入");
-        next({ path: "/" });
-      }
-    } catch (error) {
-      console.error("Error checking user authentication:", error);
+    const res = await errInterceptors.post(api);
+    if (res.data.success) {
+      console.log("main.ts:已登入", res.data);
+      next();
+    } else {
+      console.log("main.ts:尚未登入");
+      next({ path: "/" });
     }
   } else {
     next();
   }
 });
+// router.beforeEach(async (to, from, next) => {
+//   if (to.meta.requireAuth) {
+//     const api = "https://vue-course-api.hexschool.io/api/user/check";
+//     try {
+//       const res = await errInterceptors.post(api);
+//       if (res.data.success) {
+//         console.log("main.ts:已登入", res.data);
+//         next();
+//       } else {
+//         console.log("main.ts:尚未登入");
+//         next({ path: "/" });
+//       }
+//     } catch (error) {
+//       console.error("Error checking user authentication:", error);
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 app
   .use(VueAxios, axios)

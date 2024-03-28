@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
+// import axios from "axios";
 import { ref } from "vue";
 import router from "@/router";
 import Loading from "vue-loading-overlay";
@@ -60,6 +60,7 @@ import "vue-loading-overlay/dist/css/index.css";
 import { modelConfig } from "../../models/S01/modelConfig";
 import useDataStore from "../../../stores/useDataStore";
 import config from "../../../../config/dev.env";
+import errInterceptors from "@/errInterceptors";
 
 interface DataInfo {
   name: string;
@@ -86,32 +87,53 @@ const isLoading = ref(false);
 const closeInfo = (): boolean => {
   return (modelConfigController.value.userDataSwitch = false);
 };
-
 const createOrder = async () => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/order`;
-  try {
-    const response = await axios.post(api, {
-      data: {
-        user: {
-          name: dataInfo.value.name,
-          email: dataInfo.value.email,
-          tel: dataInfo.value.tel,
-          address: dataInfo.value.address,
-        },
-        message: dataInfo.value.message,
+  const response = await errInterceptors.post(api, {
+    data: {
+      user: {
+        name: dataInfo.value.name,
+        email: dataInfo.value.email,
+        tel: dataInfo.value.tel,
+        address: dataInfo.value.address,
       },
-    });
-    dataStore.getCartsItem();
-    closeInfo();
-    if (response.data.success) {
-      isLoading.value = false;
-      router.push(`/customer_payOrder/${response.data.orderId}`);
-    }
-  } catch (error) {
-    console.log(error);
+      message: dataInfo.value.message,
+    },
+  });
+  dataStore.getCartsItem();
+  closeInfo();
+  if (response.data.success) {
+    isLoading.value = false;
+    router.push(`/customer_payOrder/${response.data.orderId}`);
   }
 };
+
+// const createOrder = async () => {
+//   isLoading.value = true;
+//   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/order`;
+//   try {
+//     const response = await axios.post(api, {
+//       data: {
+//         user: {
+//           name: dataInfo.value.name,
+//           email: dataInfo.value.email,
+//           tel: dataInfo.value.tel,
+//           address: dataInfo.value.address,
+//         },
+//         message: dataInfo.value.message,
+//       },
+//     });
+//     dataStore.getCartsItem();
+//     closeInfo();
+//     if (response.data.success) {
+//       isLoading.value = false;
+//       router.push(`/customer_payOrder/${response.data.orderId}`);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 </script>
 
 <style lang="scss" scoped>

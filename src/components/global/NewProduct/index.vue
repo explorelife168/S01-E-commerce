@@ -133,13 +133,14 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
+// import axios from "axios";
 import { ref, computed } from "vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import { modelConfig } from "../../models/S01/modelConfig";
 import useDataStore from "@/stores/useDataStore";
 import config from "../../../../config/dev.env";
+import errInterceptors from "@/errInterceptors";
 
 interface CreateNewProducts {
   category: string;
@@ -206,42 +207,37 @@ const handleClick = () => {
   }
 };
 
-const createProducts = () => {
+const createProducts = async () => {
   buttonDisabled.value = true;
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/product`;
-  axios
-    .post(api, { data: creteNewProducts.value })
-    .then((response) => {
-      console.log(response);
-      closureController(); //新增成功後,關閉產品新增畫面
-      dataStore.getProducts(); //新增後更新畫面
-      buttonDisabled.value = false;
-      isLoading.value = false;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  const response = await errInterceptors.post(api, {
+    data: creteNewProducts.value,
+  });
+
+  console.log(response);
+  closureController(); //新增成功後,關閉產品新增畫面
+  dataStore.getProducts(); //新增後更新畫面
+  buttonDisabled.value = false;
+  isLoading.value = false;
 };
 
-const editProducts = () => {
+const editProducts = async () => {
   isLoading.value = true;
   const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/product/${modelConfig.productsId}`;
-  axios
-    .put(api, { data: creteNewProducts.value })
-    .then((response) => {
-      if (response.data.success) console.log("產品更新成功");
-      dataStore.getProducts();
-      closureController();
-      isLoading.value = false;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  const response = await errInterceptors.put(api, {
+    data: creteNewProducts.value,
+  });
+  if (response.data.success) {
+    console.log("產品更新成功");
+  }
+  dataStore.getProducts();
+  closureController();
+  isLoading.value = false;
 };
 
 // 檔案文件讀取
-const uploadFile = (e: Event) => {
+const uploadFile = async (e: Event) => {
   isLoading.value = true;
   const target = e.target as HTMLInputElement;
   const files = target.files;
@@ -250,24 +246,47 @@ const uploadFile = (e: Event) => {
   const formData = new FormData();
   formData.append("file-to-upload", firstFiles);
   const url = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/upload`;
-  axios
-    .post(url, formData, { headers: { "Content-Type": "multipart/form-data" } })
-    .then((response) => {
-      if (response.data.success) {
-        creteNewProducts.value.imageUrl = response.data.imageUrl;
-        console.log("圖片上傳成功");
-        isLoading.value = false;
-      } else {
-        if (!response.data.success) {
-          dataStore.errorMessage(response.data.message);
-          isLoading.value = false;
-        }
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  const response = await errInterceptors.post(url, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  if (response.data.success) {
+    creteNewProducts.value.imageUrl = response.data.imageUrl;
+    console.log("圖片上傳成功");
+    isLoading.value = false;
+  } else {
+    if (!response.data.success) {
+      dataStore.errorMessage(response.data.message);
+      isLoading.value = false;
+    }
+  }
 };
+// const uploadFile = (e: Event) => {
+//   isLoading.value = true;
+//   const target = e.target as HTMLInputElement;
+//   const files = target.files;
+//   if (!files || !files[0]) return;
+//   const firstFiles = files[0];
+//   const formData = new FormData();
+//   formData.append("file-to-upload", firstFiles);
+//   const url = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/upload`;
+//   axios
+//     .post(url, formData, { headers: { "Content-Type": "multipart/form-data" } })
+//     .then((response) => {
+//       if (response.data.success) {
+//         creteNewProducts.value.imageUrl = response.data.imageUrl;
+//         console.log("圖片上傳成功");
+//         isLoading.value = false;
+//       } else {
+//         if (!response.data.success) {
+//           dataStore.errorMessage(response.data.message);
+//           isLoading.value = false;
+//         }
+//       }
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// };
 </script>
 
 <style lang="scss" scoped>
