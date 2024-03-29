@@ -76,10 +76,12 @@ import "vue-loading-overlay/dist/css/index.css";
 import config from "../../../../config/dev.env";
 import currency from "@/utils/filters/currency"; // 小數點
 import errInterceptors from "@/errInterceptors";
-
+// import useDataStore from "@/stores/useDataStore";
 const isLoading = ref(false);
 
 const orderListStatusData = ref();
+
+// const dataStore = useDataStore();
 
 const pagination = ref({
   category: "",
@@ -117,7 +119,18 @@ const getOrderListStatus = async (page = 1) => {
 //     isLoading.value = false;
 //   }
 // };
+// const checkSingIn = async () => {
+//   const api = `${config.API_PATH}/api/user/check`;
+//   const response = await errInterceptors.post(api);
+//   if (response.data.success) {
+//     console.log("登入狀態為(OrderStatus):", response.data.success);
+//   } else {
+//     console.log("登入狀態為(OrderStatus):", response.data.success);
+//   }
+// };
+// checkSingIn();
 getOrderListStatus();
+// dataStore.checkSingIn();
 </script>
 
 <style lang="scss" scoped>

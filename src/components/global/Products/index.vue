@@ -143,6 +143,16 @@ const deleteProducts = async (id: string) => {
 //     });
 // };
 
+// const checkSingIn = async () => {
+//   const api = `${config.API_PATH}/api/user/check`;
+//   const response = await errInterceptors.post(api);
+//   if (response.data.success) {
+//     console.log("登入狀態為(Product):", response.data.success);
+//   } else {
+//     console.log("登入狀態為(Product):", response.data.success);
+//   }
+// };
+// checkSingIn();
 const editProducts = (obj: EditProducts) => {
   modelConfigController.value.createNewProduct = true;
   modelConfigController.value.editProducts = true;
@@ -150,6 +160,7 @@ const editProducts = (obj: EditProducts) => {
 };
 
 dataStore.getProducts();
+// dataStore.checkSingIn();
 </script>
 
 <style lang="scss" scoped>

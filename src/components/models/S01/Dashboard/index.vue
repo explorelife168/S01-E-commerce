@@ -30,21 +30,37 @@ import NewProduct from "../../../global/NewProduct/index.vue";
 import NewCoupon from "../../../global/NewCoupon/index.vue";
 import CheckProduct from "../../../global/CheckProduct/index.vue";
 import UserData from "../../../global/UserData/index.vue";
-
+// import useDataStore from "@/stores/useDataStore";
+// import config from "../../../../../config/dev.env";
+// import errInterceptors from "@/errInterceptors";
 import { modelConfig } from "../modelConfig";
 
 const modelConfigController = ref(modelConfig);
+
+// const dataStore = useDataStore();
 
 const updateToken = () => {
   const token = document.cookie.replace(
     /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
     "$1"
   );
-  console.log(token);
+  // console.log(token);
   axios.defaults.headers.common.Authorization = token;
 };
+// const checkSingIn = async () => {
+//   const api = `${config.API_PATH}/api/user/check`;
+//   const response = await errInterceptors.post(api);
+//   if (response.data.success) {
+//     console.log("登入狀態為(Dashboard):", response.data.success);
+//   } else {
+//     console.log("登入狀態為(Dashboard):", response.data.success);
+//   }
+// };
+// checkSingIn();
 
-updateToken(); //保存cookie以及request時候發送Token驗證用
+// dataStore.checkSingIn();
+
+updateToken(); // 保存cookie以及request時候發送Token驗證用
 </script>
 
 <style lang="scss" scoped>

@@ -309,8 +309,19 @@ const addUserData = () => {
   cartsModel.value = false;
 };
 
+// const checkSingIn = async () => {
+//   const api = `${config.API_PATH}/api/user/check`;
+//   const response = await errInterceptors.post(api);
+//   if (response.data.success) {
+//     console.log("登入狀態為(CustomerOrder):", response.data.success);
+//   } else {
+//     console.log("登入狀態為(CustomerOrder):", response.data.success);
+//   }
+// };
+// checkSingIn();
 dataStore.getProducts(); // 產品建立初始化
 dataStore.getCartsItem();
+// dataStore.checkSingIn();
 </script>
 
 <style lang="scss" scoped>

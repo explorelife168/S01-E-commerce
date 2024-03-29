@@ -140,7 +140,18 @@ const dateTransfer = (t: number) => {
   return new Date(t * 1000).toISOString().replace("T", " ").substring(0, 19);
 };
 
+// const checkSingIn = async () => {
+//   const api = `${config.API_PATH}/api/user/check`;
+//   const response = await errInterceptors.post(api);
+//   if (response.data.success) {
+//     console.log("登入狀態為(Coupon):", response.data.success);
+//   } else {
+//     console.log("登入狀態為(Coupon):", response.data.success);
+//   }
+// };
+// checkSingIn();
 dataStore.getCouponList();
+// dataStore.checkSingIn();
 </script>
 
 <style lang="scss" scoped>

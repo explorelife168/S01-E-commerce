@@ -128,7 +128,11 @@ const useDataStore = defineStore({
     },
     signInCheck: false,
   }),
-  getters: {},
+  getters: {
+    getLoginStatus(state) {
+      return state.signInCheck;
+    },
+  },
   actions: {
     // 產品畫面更新
     // async getProducts(page = 1) {
@@ -144,10 +148,10 @@ const useDataStore = defineStore({
     //     console.error(error);
     //   }
     // },
-
+    // FIXME:
     async getProducts(page = 1) {
       this.isLoading = true;
-      const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/products?page=${page}`;
+      const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/products?page=${page}`;
       const response = await errInterceptors.get(api);
       this.products = response.data.products;
       this.pagination = response.data.pagination;
@@ -159,7 +163,7 @@ const useDataStore = defineStore({
       const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/product/${id}`;
       const response = await errInterceptors.get(api);
       this.product = response.data.product;
-      console.log(response);
+      // console.log(response);
     },
 
     async getCartsItem() {
@@ -168,26 +172,28 @@ const useDataStore = defineStore({
       this.cartsItem = response.data.data.carts;
       this.total = response.data.data.total;
       this.final_total = response.data.data.final_total;
-      console.log(response);
-      console.log(this.cartsItem);
+      // console.log(response);
+      // console.log(this.cartsItem);
     },
 
-    async checkSingIn() {
-      const api = `${config.API_PATH}/api/user/check`;
-      const response = await errInterceptors.post(api);
-      if (response.data.success) {
-        this.signInCheck = true;
-      } else {
-        this.signInCheck = false;
-      }
-    },
+    // async checkSingIn() {
+    //   const api = `${config.API_PATH}/api/user/check`;
+    //   const response = await errInterceptors.post(api);
+    //   if (response.data.success) {
+    //     this.signInCheck = true;
+    //     console.log("登入狀態為(pinia):", response.data.success);
+    //   } else {
+    //     this.signInCheck = false;
+    //     console.log("登入狀態為(pinia):", response.data.success);
+    //   }
+    // },
 
     async getCouponList(page = 1) {
       const api = `${config.API_PATH}/api/${config.CUSTOM_PATH}/admin/coupons?page=${page}`;
       const response = await errInterceptors.get(api);
       this.updateCouponList = response.data.coupons;
       this.couponPagination = response.data.pagination;
-      console.log(response);
+      // console.log(response);
     },
 
     errorMessage(msg: string) {
@@ -202,6 +208,10 @@ const useDataStore = defineStore({
         this.message = "";
         this.alertSwitch = false;
       }, 5000);
+    },
+
+    actionLoginStatus() {
+      this.signInCheck = !this.signInCheck;
     },
   },
   // actions: {

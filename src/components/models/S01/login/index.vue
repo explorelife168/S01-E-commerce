@@ -41,9 +41,10 @@ import { ref, onMounted, reactive } from "vue";
 import router from "@/router";
 import config from "../../../../../config/dev.env";
 import errInterceptors from "@/errInterceptors";
+import useDataStore from "@/stores/useDataStore";
 
 const currentYears = ref(0);
-
+const dataStore = useDataStore();
 const user = reactive({
   username: "testapi@gmail.com",
   password: "123456789",
@@ -66,6 +67,7 @@ const signIn = async () => {
     const token = response.data.token;
     const expired = response.data.expired;
     document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
+    dataStore.actionLoginStatus();
     router.push("/");
   } else {
     console.log(response.data);
