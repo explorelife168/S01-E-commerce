@@ -1,27 +1,31 @@
 .alert-message-container {
   position: absolute;
+  top: 5%;
+  right: 2%;
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 5%;
-  right: 2%;
   background-color: #fbd5d9;
-  border-radius: 3px;
   border: 1px solid #facfd6;
+  border-radius: 3px;
+
   .message {
-    margin: 15px 25px 15px;
+    margin: 15px 25px;
     font-size: 1.2rem;
     color: #8a5a58;
   }
+
   .close-button {
     margin-right: 20px;
+
     button {
       font-size: 1.2rem;
+      color: #8a5a58;
       background-color: #fbd5d9;
       border: none;
-      color: #8a5a58;
       cursor: pointer;
     }
+
     button:hover {
       color: #000;
     }

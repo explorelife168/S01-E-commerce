@@ -1,34 +1,35 @@
 .userData-wrap {
   position: fixed;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
   top: 0;
   left: 0;
+  display: flex;
+  justify-content: center;
   overflow: auto;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 
   .userData-container {
     position: relative;
+    top: 50%;
     width: 700px;
     height: 400px;
     background-color: #fff;
-    top: 50%;
-    transform: translateY(-50%);
     border-radius: 5px;
     box-shadow: 0 0 50px #000;
+    transform: translateY(-50%);
 
     .userData-header {
       position: relative;
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-size: 1.4rem;
-      font-family: "Libre Baskerville", serif;
+      justify-content: center;
       width: 100%;
       height: 10%;
+      font-size: 1.4rem;
+      font-family: "Libre Baskerville", serif;
     }
+
     .userData-body {
       position: relative;
       display: flex;
@@ -37,21 +38,25 @@
 
       .userData-left {
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         width: 50%;
         height: 100%;
+
         form {
           width: 90%;
           height: 90%;
+
           .userData-name {
             width: 100%;
             height: 22%;
+
             label {
               display: block;
-              font-weight: bold;
               font-size: 1.1rem;
+              font-weight: bold;
             }
+
             input {
               width: 90%;
               background-color: rgba(200, 150, 100, 0.5);
@@ -59,14 +64,17 @@
               border-radius: 3px;
             }
           }
+
           .userData-email {
             width: 100%;
             height: 22%;
+
             label {
               display: block;
-              font-weight: bold;
               font-size: 1.1rem;
+              font-weight: bold;
             }
+
             input {
               width: 90%;
               background-color: rgba(200, 150, 100, 0.5);
@@ -74,14 +82,17 @@
               border-radius: 3px;
             }
           }
+
           .userData-tel {
             width: 100%;
             height: 22%;
+
             label {
               display: block;
-              font-weight: bold;
               font-size: 1.1rem;
+              font-weight: bold;
             }
+
             input {
               width: 90%;
               background-color: rgba(200, 150, 100, 0.5);
@@ -89,14 +100,17 @@
               border-radius: 3px;
             }
           }
+
           .userData-address {
             width: 100%;
             height: 22%;
+
             label {
               display: block;
-              font-weight: bold;
               font-size: 1.1rem;
+              font-weight: bold;
             }
+
             input {
               width: 90%;
               background-color: rgba(200, 150, 100, 0.5);
@@ -106,27 +120,33 @@
           }
         }
       }
+
       .userData-right {
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         width: 50%;
         height: 100%;
+
         .form-left {
           width: 90%;
           height: 90%;
+
           form {
             width: 100%;
             height: 80%;
+
             .userData-message {
               width: 100%;
               height: 100%;
+
               label {
                 display: block;
-                font-weight: bold;
-                font-size: 1.1rem;
                 margin-bottom: 5px;
+                font-size: 1.1rem;
+                font-weight: bold;
               }
+
               textarea {
                 width: 90%;
                 height: 50%;
@@ -136,46 +156,53 @@
               }
             }
           }
+
           .form-btn {
             position: relative;
             display: flex;
-            justify-content: space-between;
             align-items: flex-end;
+            justify-content: space-between;
             width: 100%;
             height: 20%;
+
             .next-btn {
               width: 40%;
               height: 50%;
+
               button {
                 width: 100%;
                 height: 100%;
-                border-radius: 3px;
-                border: 1px solid #adadad;
                 background-color: #fff;
+                border: 1px solid #adadad;
+                border-radius: 3px;
                 transition: font-size 0.1s ease;
+
                 &:hover {
-                  background-color: #4b4f53;
-                  color: #fff;
                   font-size: 1.1rem;
+                  color: #fff;
+                  background-color: #4b4f53;
                   cursor: pointer;
                 }
               }
             }
+
             .back-btn {
               width: 40%;
               height: 50%;
+
               button {
                 width: 100%;
                 height: 100%;
-                border-radius: 3px;
-                border: 1px solid #616161;
-                background-color: #4b4f53;
                 color: #fff;
+                background-color: #4b4f53;
+                border: 1px solid #616161;
+                border-radius: 3px;
                 transition: font-size 0.1s ease;
+
                 &:hover {
-                  background-color: #fff;
-                  color: #000;
                   font-size: 1.1rem;
+                  color: #000;
+                  background-color: #fff;
                   cursor: pointer;
                 }
               }

@@ -14,9 +14,9 @@
     min-width: 330px;
 
     .logo {
+      position: relative;
       margin-top: -6%;
       width: 45%;
-      position: relative;
       height: 25%;
       background-repeat: no-repeat;
       background-size: 45% auto;
@@ -26,20 +26,21 @@
       position: relative;
       display: block;
       margin: 5% 0;
-      font-family: "Libre Baskerville", serif;
       font-size: 1.5rem;
+      font-family: "Libre Baskerville", serif;
       font-weight: 400;
       color: #495057;
     }
 
     .input {
-      width: 100%;
-      margin-bottom: 5%;
-      color: #dee2e6;
       position: relative;
+      margin-bottom: 5%;
+      width: 100%;
+      color: #dee2e6;
 
       input {
         display: block;
+        padding-left: 2%;
         width: 98%;
         height: 45px;
         font-size: 1.2rem;
@@ -51,7 +52,6 @@
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         padding-block: 0;
         padding-inline: 0;
-        padding-left: 2%;
       }
 
       input:focus {
@@ -112,9 +112,9 @@
     }
 
     .btn-sign-in {
+      position: relative;
       display: block;
       margin-top: 5%;
-      position: relative;
 
       button {
         width: 100%;

@@ -4,44 +4,53 @@
   height: 100%;
   background-color: #2a3036;
   border: 1px solid #495057;
+
   .menu {
     width: 100%;
+
     ul {
       position: relative;
       padding-top: 15%;
       padding-inline-start: 10px;
+
       li {
         list-style: none;
+
         a {
-          text-decoration: none;
           margin-bottom: 7%;
-          color: #6aa2ff;
-          font-weight: bold;
           font-size: 0.9rem;
+          font-weight: bold;
+          text-decoration: none;
+          color: #6aa2ff;
         }
+
         &:hover {
           color: #2665e0;
           cursor: pointer;
         }
+
         &:nth-child(1),
         &:nth-child(5) {
-          color: #b1b5bb;
           margin-top: 15%;
+          color: #b1b5bb;
+
           &:hover {
             cursor: text;
           }
         }
+
         &:nth-child(12) {
           margin-top: 25%;
         }
+
         &:nth-child(11)::after {
           position: absolute;
-          left: 0;
           bottom: 15%;
-          content: "";
+          left: 0;
           width: 100%;
           height: 1px;
           background-color: #495057;
+          content: "";
         }
       }
     }
