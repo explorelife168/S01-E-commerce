@@ -1,26 +1,24 @@
 <template>
   <div class="Navbar-wrap">
-    <div class="title">
-      <div
-        class="logo"
-        :style="{
-          'background-image': `url(${require('@/assets/image/Vissla_Logo.png')})`,
-        }"
-        @click="toHomePage"
-      ></div>
+    <!-- <div class="title"> -->
+    <div
+      class="logo"
+      :style="{
+        'background-image': `url(${require('@/assets/image/Vissla_Logo.png')})`,
+      }"
+      @click="toHomePage"
+    ></div>
 
-      <div class="userIcon">
-        <font-awesome-icon
-          :icon="
-            loginStatus
-              ? 'fa-solid fa-right-from-bracket'
-              : 'fa-regular fa-user'
-          "
-          @click="loginStatus ? signOut() : toLogin()"
-        />
-      </div>
+    <div class="userIcon">
+      <font-awesome-icon
+        :icon="
+          loginStatus ? 'fa-solid fa-right-from-bracket' : 'fa-regular fa-user'
+        "
+        @click="loginStatus ? signOut() : toLogin()"
+      />
+    </div>
 
-      <!-- <div class="userIcon" v-if="!dataStore.signInCheck">
+    <!-- <div class="userIcon" v-if="!dataStore.signInCheck">
         <font-awesome-icon icon="fa-regular fa-user" @click="toLogin" />
       </div>
       <div class="signOutIcon" v-if="dataStore.signInCheck">
@@ -29,26 +27,26 @@
           @click="signOut"
         />
       </div> -->
-      <div class="admin-Link" v-if="dataStore.signInCheck">
-        <div class="admin" @click="toggleDropdown">
-          <p>Admin</p>
-          <ul v-show="showDropdown" ref="dropdownMenu">
-            <li>
-              <router-link to="/admin_products">Product List</router-link>
-            </li>
-            <li>
-              <router-link to="/admin_order_status">Order Status</router-link>
-            </li>
-            <li>
-              <router-link to="/admin_coupon">Coupon</router-link>
-            </li>
-            <li>
-              <router-link to="/customer_order">Orders</router-link>
-            </li>
-          </ul>
-        </div>
+    <div class="admin-Link" v-if="dataStore.signInCheck">
+      <div class="admin" @click="toggleDropdown">
+        <p>Admin</p>
+        <ul v-show="showDropdown" ref="dropdownMenu">
+          <li>
+            <router-link to="/admin_products">Product List</router-link>
+          </li>
+          <li>
+            <router-link to="/admin_order_status">Order Status</router-link>
+          </li>
+          <li>
+            <router-link to="/admin_coupon">Coupon</router-link>
+          </li>
+          <li>
+            <router-link to="/customer_order">Orders</router-link>
+          </li>
+        </ul>
       </div>
     </div>
+    <!-- </div> -->
   </div>
 </template>
 
